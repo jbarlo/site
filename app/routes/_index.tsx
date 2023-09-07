@@ -6,8 +6,34 @@ export const meta: V2_MetaFunction = () => {
   ];
 };
 
-const lightModePalette = { title: "black", subdomain: "gray", bg: "white" };
-const darkModePalette = { title: "white", subdomain: "gray", bg: "black" };
+const lightColors = {
+  a: "#4A4063",
+  b: "#C6D4FF",
+  c: "#C83E4D",
+  d: "#D58936",
+  e: "#44BBA4",
+};
+
+const lightModePalette = {
+  title: lightColors.a,
+  subdomain: "gray",
+  bg: lightColors.b,
+  header: lightColors.b,
+};
+
+const darkColors = {
+  a: "#373F47",
+  b: "#EDF2F4",
+  c: "#D1462F",
+  d: "#939F5C",
+  e: "#FFC53A",
+};
+const darkModePalette = {
+  title: darkColors.b,
+  subdomain: darkColors.e,
+  bg: darkColors.a,
+  header: darkColors.a,
+};
 const palette = true ? darkModePalette : lightModePalette;
 
 export default function Index() {
@@ -16,44 +42,55 @@ export default function Index() {
       <div
         style={{
           lineHeight: "1.8",
-          marginLeft: "20px",
           display: "flex",
           flexDirection: "column",
           minHeight: "100vh",
         }}
       >
-        <h1
-          style={{
-            margin: 0,
-            marginTop: "12px",
-            marginBottom: "20px",
-            lineHeight: 1,
-            color: palette.title,
-          }}
-        >
-          <span style={{ letterSpacing: "0.15em" }}>barlo</span>
-          <span style={{ color: palette.subdomain, fontStyle: "italic" }}>
+        <div style={{ backgroundColor: palette.header }}>
+          <h1
+            style={{
+              margin: 0,
+              marginLeft: "20px",
+              marginTop: "4px",
+              marginBottom: "10px",
+              lineHeight: 1,
+              color: palette.title,
+              fontWeight: 400,
+            }}
+          >
+            <span style={{ letterSpacing: "0.15em" }}>barlo</span>
             <span
               style={{
-                letterSpacing: "0.1em",
-                fontSize: "1.3em",
-                verticalAlign: "-12.5%",
+                color: palette.subdomain,
+                fontStyle: "italic",
+                fontWeight: 200,
               }}
             >
-              /
+              <span
+                style={{
+                  letterSpacing: "0.1em",
+                  fontSize: "1.3em",
+                  verticalAlign: "-12.5%",
+                }}
+              >
+                /
+              </span>
+              <span>www</span>
             </span>
-            <span>www</span>
-          </span>
-        </h1>
-        <div
-          style={{
-            flexGrow: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div style={{ fontSize: "2em" }}>👀</div>
+          </h1>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+          <div
+            style={{
+              display: "flex",
+              flexGrow: 1,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div style={{ fontSize: "2em" }}>👀</div>
+          </div>
         </div>
       </div>
     </div>
