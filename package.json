@@ -5,7 +5,8 @@
     "build": "remix build",
     "dev": "remix dev",
     "start": "remix-serve build",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "build-static": "rm -R static; wget -r -nH -m http://localhost:3000/favicon.ico -P static; npx staticmirror http://localhost:3000"
   },
   "dependencies": {
     "@remix-run/css-bundle": "^1.19.3",
