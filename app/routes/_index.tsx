@@ -71,24 +71,24 @@ export default function Index() {
             </span>
           </h1>
         </div>
-        <div className="flex grow basis-0 items-stretch gap-5 p-5">
-          <div className="grow basis-0 pt-10">
+        <div className="grow gap-5 p-5 sm:flex sm:basis-0 sm:items-stretch">
+          <div className="pt-10 sm:grow sm:basis-0">
             <div
-              className="sticky top-20 box-border h-48 p-5"
+              className="top-20 box-border h-48 p-5 sm:sticky"
               style={{ backgroundColor: palette.card }}
             >
               <div>Hello</div>
             </div>
           </div>
           <div
-            className="grow-4 flex basis-0 flex-col"
+            className="2xl:grow-4  md:grow-2 flex flex-col sm:grow sm:basis-0"
             style={{ height: 1000 }}
           >
             <div className="flex grow items-center justify-center">
               <div className="text-4xl">👀</div>
             </div>
           </div>
-          <div className="grow basis-0" />
+          <div className="sm:basis-0 xl:grow" />
         </div>
       </div>
     </div>
