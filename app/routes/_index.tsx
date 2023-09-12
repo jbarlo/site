@@ -2,9 +2,7 @@ import type { V2_MetaFunction } from "@remix-run/node";
 import { colord } from "colord";
 
 export const meta: V2_MetaFunction = () => {
-  return [
-    // { title: "New Remix App" },
-  ];
+  return [{ title: "home | barlo" }];
 };
 
 const lightColors = {

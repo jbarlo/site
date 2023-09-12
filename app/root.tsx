@@ -27,6 +27,10 @@ export const links: LinksFunction = () => [
   },
   { rel: "stylesheet", href: styles },
   { rel: "stylesheet", href: tailwind },
+  {
+    rel: "icon",
+    href: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">ジ</text></svg>',
+  },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
