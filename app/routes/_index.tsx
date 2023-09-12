@@ -20,6 +20,7 @@ const lightModePalette = {
   header: lightColors.b,
   card: lightColors.b,
   text: "black",
+  subtitle: "black",
 };
 
 const darkColors = {
@@ -36,6 +37,7 @@ const darkModePalette = {
   header: colord(darkColors.a).lighten(0.05).toHex(),
   card: colord(darkColors.a).lighten(0.05).toHex(),
   text: colord(darkColors.b).darken(0.1).toHex(),
+  subtitle: colord(darkColors.b).darken(0.3).toHex(),
 };
 const palette = true ? darkModePalette : lightModePalette;
 
@@ -72,10 +74,24 @@ export default function Index() {
         <div className="grow gap-5 p-5 sm:flex sm:basis-0 sm:items-stretch">
           <div className="pt-10 sm:grow sm:basis-0">
             <div
-              className="top-20 box-border h-48 p-5 sm:sticky"
+              className="top-20 box-border h-44 p-5 sm:sticky"
               style={{ backgroundColor: palette.card }}
             >
-              <div>Hello</div>
+              <div className="flex justify-between gap-2">
+                <div className="flex flex-col justify-between ">
+                  <div className="text-2xl">james barlo(w)</div>
+                  <div
+                    className="pt-2 text-lg leading-5"
+                    style={{ color: palette.subtitle }}
+                  >
+                    developer + (?) enthusiast
+                  </div>
+                </div>
+                <div
+                  className="aspect-square h-20 rounded-full"
+                  style={{ backgroundColor: "darkcyan" }}
+                />
+              </div>
             </div>
           </div>
           <div
