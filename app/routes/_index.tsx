@@ -1,4 +1,5 @@
 import type { V2_MetaFunction } from "@remix-run/node";
+import { colord } from "colord";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -19,6 +20,8 @@ const lightModePalette = {
   subdomain: "gray",
   bg: lightColors.b,
   header: lightColors.b,
+  card: lightColors.b,
+  text: "black",
 };
 
 const darkColors = {
@@ -32,13 +35,15 @@ const darkModePalette = {
   title: darkColors.b,
   subdomain: darkColors.e,
   bg: darkColors.a,
-  header: darkColors.a,
+  header: colord(darkColors.a).lighten(0.05).toHex(),
+  card: colord(darkColors.a).lighten(0.05).toHex(),
+  text: colord(darkColors.b).darken(0.1).toHex(),
 };
 const palette = true ? darkModePalette : lightModePalette;
 
 export default function Index() {
   return (
-    <div style={{ backgroundColor: palette.bg }}>
+    <div style={{ backgroundColor: palette.bg, color: palette.text }}>
       <div className="flex min-h-screen flex-col leading-relaxed">
         <div
           className="sticky top-0"
@@ -70,7 +75,7 @@ export default function Index() {
           <div className="grow basis-0 pt-10">
             <div
               className="sticky top-20 box-border h-48 p-5"
-              style={{ backgroundColor: "green" }}
+              style={{ backgroundColor: palette.card }}
             >
               <div>Hello</div>
             </div>
