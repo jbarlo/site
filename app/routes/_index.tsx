@@ -49,6 +49,7 @@ export default function Index() {
       >
         <div style={{ backgroundColor: palette.header }}>
           <h1
+            className="text-4xl font-normal"
             style={{
               margin: 0,
               marginLeft: "20px",
