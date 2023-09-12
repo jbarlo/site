@@ -39,34 +39,19 @@ const palette = true ? darkModePalette : lightModePalette;
 export default function Index() {
   return (
     <div style={{ backgroundColor: palette.bg }}>
-      <div
-        style={{
-          lineHeight: "1.8",
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
-        }}
-      >
-        <div style={{ backgroundColor: palette.header }}>
+      <div className="flex min-h-screen flex-col leading-relaxed">
+        <div
+          className="sticky top-0"
+          style={{ backgroundColor: palette.header }}
+        >
           <h1
-            className="text-4xl font-normal"
-            style={{
-              margin: 0,
-              marginLeft: "20px",
-              marginTop: "4px",
-              marginBottom: "10px",
-              lineHeight: 1,
-              color: palette.title,
-              fontWeight: 400,
-            }}
+            className="m-0 mb-2 ml-5 mt-1 text-4xl font-normal leading-none"
+            style={{ color: palette.title }}
           >
             <span style={{ letterSpacing: "0.15em" }}>barlo</span>
             <span
-              style={{
-                color: palette.subdomain,
-                fontStyle: "italic",
-                fontWeight: 200,
-              }}
+              className="font-extralight italic"
+              style={{ color: palette.subdomain }}
             >
               <span
                 style={{
@@ -81,17 +66,24 @@ export default function Index() {
             </span>
           </h1>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
-          <div
-            style={{
-              display: "flex",
-              flexGrow: 1,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <div style={{ fontSize: "2em" }}>👀</div>
+        <div className="flex grow basis-0 items-stretch gap-5 p-5">
+          <div className="grow basis-0 pt-10">
+            <div
+              className="sticky top-20 box-border h-48 p-5"
+              style={{ backgroundColor: "green" }}
+            >
+              <div>Hello</div>
+            </div>
           </div>
+          <div
+            className="grow-4 flex basis-0 flex-col"
+            style={{ height: 1000 }}
+          >
+            <div className="flex grow items-center justify-center">
+              <div className="text-4xl">👀</div>
+            </div>
+          </div>
+          <div className="grow basis-0" />
         </div>
       </div>
     </div>
