@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import HeaderTitle from "../components/HeaderTitle";
+import Header from "../layouts/Header.astro";
+import Three from "../layouts/Three.astro";
 import { colord } from "colord";
 
 const lightColors = {
@@ -43,58 +44,16 @@ const palette = true ? darkModePalette : lightModePalette;
 <Layout title="home | barlo">
   <div style={{ backgroundColor: palette.bg, color: palette.text }}>
     <div class="flex min-h-screen flex-col leading-relaxed">
-      <div class="sticky top-0" style={{ backgroundColor: palette.header }}>
-        <HeaderTitle
-          titleColor={palette.title}
-          subdomainColor={palette.subdomain}
-        />
-      </div>
-      <div class="grow gap-5 p-5 sm:flex sm:basis-0 sm:items-stretch">
-        <div class="pt-10 sm:grow sm:basis-0">
-          <div
-            class="top-20 box-border h-44 p-5 sm:sticky"
-            style={{ backgroundColor: palette.card }}
-          >
-            <div class="flex justify-between gap-2">
-              <div class="flex flex-col justify-between">
-                <div class="text-2xl">james barlo(w)</div>
-                <div
-                  class="pt-2 text-lg leading-5"
-                  style={{ color: palette.subtitle }}
-                >
-                  <div>developer</div>
-                </div>
-              </div>
-              <div
-                class="aspect-square h-20 rounded-full"
-                style={{ backgroundColor: "darkcyan" }}
-              >
-              </div>
-            </div>
-          </div>
+      <Header
+        backgroundColor={palette.bg}
+        titleColor={palette.title}
+        subdomainColor={palette.subdomain}
+      />
+      <Three>
+        <div style={{ height: 1000 }}>
+          <h2 class="text-2xl">recent</h2>
         </div>
-        <div
-          class="2xl:grow-4 md:grow-2 flex flex-col sm:grow sm:basis-0"
-          style={{ height: 1000 }}
-        >
-          <div class="flex grow items-center justify-center">
-            <div class="text-4xl">👀</div>
-          </div>
-        </div>
-        <div class="sm:basis-0 xl:grow"></div>
-      </div>
+      </Three>
     </div>
   </div>
 </Layout>
-
-<style>
-  /* main {
-    margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    color: white;
-    /* font-size: 20px; 
-    line-height: 1.6;
-  } */
-</style>

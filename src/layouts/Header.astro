@@ -1,0 +1,34 @@
+---
+import HeaderTitle from "../components/HeaderTitle";
+import HoverableLink from "../components/HoverableLink";
+import Three from "../layouts/Three.astro";
+
+const { backgroundColor, titleColor, subdomainColor } = Astro.props;
+
+const pages = [
+  { url: "/", title: "home" },
+  { url: "/about", title: "about" },
+  //   { url: "/g", title: "blogarden" },
+  //   { url: "/garage", title: "garage" },
+  //   { url: "/cal", title: "cal" },
+];
+---
+
+<div class="sticky top-0" style={{ backgroundColor }}>
+  <Three>
+    <div class="flex justify-between items-center">
+      <HeaderTitle titleColor={titleColor} subdomainColor={subdomainColor} />
+      <span class="space-x-4">
+        {
+          pages.map(({ url, title }) => (
+            <HoverableLink
+              currUrl={Astro.url.pathname}
+              toUrl={url}
+              title={title}
+            />
+          ))
+        }
+      </span>
+    </div>
+  </Three>
+</div>

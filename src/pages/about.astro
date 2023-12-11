@@ -1,0 +1,88 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HeaderTitle from "../components/HeaderTitle";
+import IntroCard from "../components/IntroCard";
+import Header from "../layouts/Header.astro";
+import { colord } from "colord";
+import Three from "../layouts/Three.astro";
+
+const lightColors = {
+  a: "#4A4063",
+  b: "#C6D4FF",
+  c: "#C83E4D",
+  d: "#D58936",
+  e: "#44BBA4",
+};
+
+const lightModePalette = {
+  title: lightColors.a,
+  subdomain: "gray",
+  bg: lightColors.b,
+  header: lightColors.b,
+  card: lightColors.b,
+  text: "black",
+  subtle: "black",
+  subtitle: "black",
+};
+
+const darkColors = {
+  a: "#373F47",
+  b: "#EDF2F4",
+  c: "#D1462F",
+  d: "#939F5C",
+  e: "#FFC53A",
+};
+const darkModePalette = {
+  title: darkColors.b,
+  subdomain: darkColors.e,
+  bg: darkColors.a,
+  header: colord(darkColors.a).lighten(0.05).toHex(),
+  card: colord(darkColors.a).lighten(0.05).toHex(),
+  text: colord(darkColors.b).darken(0.1).toHex(),
+  subtle: colord(darkColors.b).darken(0.25).toHex(),
+  subtitle: colord(darkColors.b).darken(0.3).toHex(),
+};
+const palette = true ? darkModePalette : lightModePalette;
+---
+
+<Layout title="about | barlo">
+  <div style={{ backgroundColor: palette.bg, color: palette.text }}>
+    <div class="flex min-h-screen flex-col leading-relaxed">
+      <Header
+        backgroundColor={palette.bg}
+        titleColor={palette.title}
+        subdomainColor={palette.subdomain}
+      />
+      <Three>
+        <div class="mb-4">
+          <h2 class="text-xl pb-1">me</h2>
+          <div>Hey, I'm James Barlow!</div>
+          <div class="leading-snug">
+            I'm a developer working out of Vancouver, Canada. I like to pick up
+            and drop problems until I pick them up again.
+          </div>
+        </div>
+        <!-- <div class="mb-4">
+          <h2 class="text-xl pb-1">work</h2>
+        </div> -->
+        <div class="mb-4">
+          <h2 class="text-xl pb-1">topics</h2>
+          <div>
+            <span style={{ color: palette.subdomain }}>[always]:</span>
+             systems, serendipity, process, design
+          </div>
+          <div>
+            <span style={{ color: palette.subdomain }}>[atm]:</span>
+             linux, llms, skateboarding, espresso <i
+              style={{ color: palette.subtle }}>(yeah I know)</i
+            >
+          </div>
+          <div>
+            <span style={{ color: palette.subdomain }}>[backburner]:</span>
+             analog photography, 3d printing, gamedev
+          </div>
+        </div>
+      </Three>
+    </div>
+  </div>
+</Layout>
