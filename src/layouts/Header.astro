@@ -14,10 +14,14 @@ const pages = [
 ];
 ---
 
-<div class="sticky top-0" style={{ backgroundColor }}>
+<nav class="sticky top-0" style={{ backgroundColor }}>
   <Three>
     <div class="flex justify-between items-center">
-      <HeaderTitle titleColor={titleColor} subdomainColor={subdomainColor} />
+      <HeaderTitle
+        titleColor={titleColor}
+        subdomainColor={subdomainColor}
+        suffix={Astro.url.pathname === "/g" ? "g" : undefined}
+      />
       <span class="space-x-4">
         {
           pages.map(({ url, title }) => (
@@ -31,4 +35,4 @@ const pages = [
       </span>
     </div>
   </Three>
-</div>
+</nav>

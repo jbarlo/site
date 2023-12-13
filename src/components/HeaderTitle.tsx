@@ -3,11 +3,13 @@ import type { FC } from "react";
 export interface HeaderTitleProps {
   titleColor: string;
   subdomainColor: string;
+  suffix?: string;
 }
 
 const HeaderTitle: FC<HeaderTitleProps> = ({
   titleColor,
   subdomainColor,
+  suffix,
 }: HeaderTitleProps) => (
   <h1
     className="m-0 mb-2 mt-1 inline text-3xl font-normal leading-none"
@@ -25,7 +27,7 @@ const HeaderTitle: FC<HeaderTitleProps> = ({
       >
         /
       </span>
-      <span>www</span>
+      <span>{suffix ?? "www"}</span>
     </span>
   </h1>
 );
