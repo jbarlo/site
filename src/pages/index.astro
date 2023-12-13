@@ -40,6 +40,7 @@ const darkModePalette = {
 };
 const palette = true ? darkModePalette : lightModePalette;
 
+// TODO first 3
 const posts = [
   {
     title: "a",
@@ -59,6 +60,7 @@ const posts = [
         backgroundColor={palette.bg}
         titleColor={palette.title}
         subdomainColor={palette.subdomain}
+        iconColor={palette.text}
       />
       <Three>
         <div class="flex flex-col gap-2">
@@ -72,7 +74,7 @@ const posts = [
                   </a>
                 </h3>
                 <p
-                  class="leading-normal max-h-36 text-ellipsis line-clamp-6 md:line-clamp-4"
+                  class="leading-normal max-h-36 text-ellipsis break-words line-clamp-6 md:line-clamp-4"
                   style={{ wordBreak: "break-word" }}
                 >
                   {p.snippet}

@@ -1,9 +1,11 @@
 ---
 import HeaderTitle from "../components/HeaderTitle";
 import HoverableLink from "../components/HoverableLink";
+import ExternalLink from "../components/ExternalLink";
+import Github from "../components/icons/Github";
 import Three from "../layouts/Three.astro";
 
-const { backgroundColor, titleColor, subdomainColor } = Astro.props;
+const { backgroundColor, titleColor, subdomainColor, iconColor } = Astro.props;
 
 const pages = [
   { url: "/", title: "home" },
@@ -33,6 +35,11 @@ const pages = [
           ))
         }
       </span>
+    </div>
+    <div class="flex justify-end gap-5">
+      <ExternalLink href="https://www.github.com/jbarlo/">
+        <Github fill={iconColor} />
+      </ExternalLink>
     </div>
   </Three>
 </nav>

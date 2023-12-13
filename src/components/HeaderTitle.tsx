@@ -12,7 +12,7 @@ const HeaderTitle: FC<HeaderTitleProps> = ({
   suffix,
 }: HeaderTitleProps) => (
   <h1
-    className="m-0 mb-2 mt-1 inline text-3xl font-normal leading-none"
+    className="m-0 mb-1 mt-1 inline text-3xl font-normal leading-none"
     style={{ color: titleColor }}
   >
     <span style={{ letterSpacing: "0.15em" }}>barl</span>

@@ -43,6 +43,12 @@ const darkModePalette = {
   subtitle: colord(darkColors.b).darken(0.3).toHex(),
 };
 const palette = true ? darkModePalette : lightModePalette;
+
+const blurb =
+  "I'm a developer working out of Vancouver, Canada. I like to pick up and drop problems, sometimes I solve them.";
+// TODO workshop tenses of "it's"
+// const blurb =
+//   "I'm a developer working out of Vancouver, Canada. I like to pick up and drop problems until I'm done or it's done.";
 ---
 
 <Layout title="about | barlo">
@@ -52,13 +58,13 @@ const palette = true ? darkModePalette : lightModePalette;
         backgroundColor={palette.bg}
         titleColor={palette.title}
         subdomainColor={palette.subdomain}
+        iconColor={palette.text}
       />
       <Three>
         <div class="mb-4">
           <h2 class="text-xl pb-1 lowercase">james barlow</h2>
           <div class="leading-snug">
-            I'm a developer working out of Vancouver, Canada. I like to pick up
-            and drop problems, sometimes I solve them.
+            {blurb}
           </div>
         </div>
         <!-- <div class="mb-4">
