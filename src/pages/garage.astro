@@ -1,0 +1,77 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../layouts/Header.astro";
+import Three from "../layouts/Three.astro";
+import Footer from "../layouts/Footer.astro";
+import ExternalLink from "../components/ExternalLink";
+import Card from "../components/Card";
+import Quiet from "../components/Quiet";
+import palette from "../palette";
+
+const projects: {
+  id: string;
+  label: string;
+  lastUpdated: Date;
+  github?: string;
+}[] = [
+  { id: "test", label: "Test", lastUpdated: new Date() },
+  { id: "test", label: "Test", lastUpdated: new Date() },
+  { id: "test", label: "Test", lastUpdated: new Date() },
+  { id: "test", label: "Test", lastUpdated: new Date() },
+  { id: "test", label: "Test", lastUpdated: new Date() },
+  { id: "test", label: "Test", lastUpdated: new Date() },
+  { id: "test", label: "Test", lastUpdated: new Date() },
+];
+---
+
+<Layout title="garage | barlo" overflowColor={palette.footer}>
+  <div style={{ backgroundColor: palette.bg, color: palette.text }}>
+    <div class="flex min-h-screen flex-col leading-relaxed">
+      <Header
+        backgroundColor={palette.bg}
+        titleColor={palette.title}
+        subdomainColor={palette.subdomain}
+      />
+      <Three>
+        <div class="mb-4">
+          <h2 class="text-xl pb-1 lowercase">garage</h2>
+          <h3 class="text-sm pb-1 lowercase">what is this?</h3>
+          <div>
+            <p class="leading-tight pb-0.5">
+              it's sort of a projects page, but messier. things found here
+              aren't guaranteed to be done or really even good.
+            </p>
+            <p>
+              the focus is on process over results <i>
+                <Quiet>(but hopefully there's a few good results too)</Quiet>
+                .
+              </i>
+            </p>
+            <p class="leading-tight">
+              the name is lifted from <ExternalLink
+                href="https://notes.andymatuschak.org/Work_with_the_garage_door_up"
+              >
+                Andy Matuschak's "Work with the garage door up"
+              </ExternalLink>, which informed the ethos and initially piqued my
+              interest.
+            </p>
+          </div>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-3"
+          >
+            {
+              projects.map((project) => (
+                <a href={`/garage/${project.id}`}>
+                  <Card className="w-full transition-transform hover:-translate-y-0.5">
+                    {project.label}
+                  </Card>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </Three>
+      <Footer />
+    </div>
+  </div>
+</Layout>
