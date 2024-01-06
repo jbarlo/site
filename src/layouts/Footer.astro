@@ -2,15 +2,14 @@
 import ExternalLink from "../components/ExternalLink";
 import Github from "../components/icons/Github";
 import Three from "./Three.astro";
-
-const { backgroundColor, iconColor } = Astro.props;
+import palette from "../palette";
 ---
 
-<nav class="sticky top-0" style={{ backgroundColor }}>
+<nav class="sticky top-0" style={{ backgroundColor: palette.footer }}>
   <Three>
     <div class="flex justify-end gap-5">
       <ExternalLink href="https://www.github.com/jbarlo/">
-        <Github fill={iconColor} />
+        <Github fill={palette.text} />
       </ExternalLink>
     </div>
   </Three>

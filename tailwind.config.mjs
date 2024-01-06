@@ -8,6 +8,9 @@ export default {
         3: "3",
         4: "4",
       },
+      screens: {
+        "3xl": "1600px",
+      },
     },
   },
   plugins: [],
