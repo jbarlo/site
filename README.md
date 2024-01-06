@@ -1,6 +1,8 @@
-# Setup
+# Site
 
-Built on Node v20 with Astro.
+Built on Node v20 with [Astro](https://astro.build/).
+
+## Setup
 
 To run locally, install with:
 
@@ -14,9 +16,9 @@ then start the dev server with:
 npm run dev
 ```
 
-# Deployment
+## Deployment
 
-Run the following to statically generated the site, then merge and forget!
+Run the following to statically generate the site, then push and forget it!
 
 ```sh
 npm run build
