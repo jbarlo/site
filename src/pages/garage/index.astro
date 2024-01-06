@@ -62,7 +62,7 @@ const projects: {
             {
               projects.map((project) => (
                 <a href={`/garage/${project.id}`}>
-                  <Card className="w-full transition-transform hover:-translate-y-0.5">
+                  <Card className="w-full transition-transform hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:transform-none">
                     {project.label}
                   </Card>
                 </a>
