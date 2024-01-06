@@ -10,7 +10,7 @@ import projects from "../../projects";
 ---
 
 <Layout title="garage | barlo">
-  <div class="bg-bg text-text">
+  <div class="bg-limed-spruce text-text">
     <div class="flex min-h-screen flex-col leading-relaxed">
       <Header />
       <Three>
@@ -43,13 +43,11 @@ import projects from "../../projects";
             {
               projects.map((project) => (
                 <a href={`/garage/${project.id}`}>
-                  <Card className="w-full h-32 overflow-hidden relative p-0 transition-transform hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:transform-none">
+                  <Card className="w-full h-32 overflow-hidden relative transition-transform hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:transform-none">
                     <div
-                      class={`h-full w-full bg-center bg-cover bg-[url('${project.imgUrl}')]`}
+                      class={`h-full w-full bg-center bg-cover ${project.imgClass}`}
                     />
-                    <div
-                      class={`z-10 bg-card h-10 w-1/2 absolute bottom-0 right-0`}
-                    >
+                    <div class="z-10 p-2 bg-limed-spruce-700 h-10 w-3/4 absolute bottom-0 right-0">
                       {project.label}
                     </div>
                   </Card>

@@ -7,7 +7,9 @@ const Card: FC<CardProps> = ({
   children,
   className,
 }: PropsWithChildren<CardProps>) => (
-  <div className={`bg-card box-border p-5 ${className ?? ""}`}>{children}</div>
+  <div className={`bg-limed-spruce-700 box-border ${className ?? ""}`}>
+    {children}
+  </div>
 );
 
 export default Card;

@@ -14,9 +14,6 @@ const lightModePalette = {
   title: lightColors.a,
   subdomain: "gray",
   footer: lightColors.b,
-  bg: lightColors.b,
-  header: lightColors.b,
-  card: lightColors.b,
   text: "black",
   subtle: "black",
   subtitle: "black",
@@ -31,10 +28,7 @@ const darkColors = {
 const darkModePalette = {
   title: darkColors.b,
   subdomain: darkColors.e,
-  bg: darkColors.a,
   footer: colord(darkColors.a).darken(0.15).toHex(),
-  header: colord(darkColors.a).lighten(0.05).toHex(),
-  card: colord(darkColors.a).lighten(0.05).toHex(),
   text: colord(darkColors.b).darken(0.1).toHex(),
   subtle: colord(darkColors.b).darken(0.25).toHex(),
   subtitle: colord(darkColors.b).darken(0.3).toHex(),
@@ -48,9 +42,20 @@ export default {
         title: darkModePalette.title,
         subdomain: darkModePalette.subdomain,
         footer: darkModePalette.footer,
-        bg: darkModePalette.bg,
-        header: darkModePalette.header,
-        card: darkModePalette.card,
+        "limed-spruce": {
+          50: "#f4f6f7", // fail 80% APCA (dark mode)
+          100: "#e2e8eb", // fail 80% APCA (dark mode)
+          200: "#c8d3d9", // fail 80% APCA (dark mode)
+          300: "#a1b4bf", // fail 80% APCA (dark mode)
+          400: "#748e9c", // fail 80% APCA (dark mode)
+          500: "#587282",
+          600: "#4c5f6e",
+          700: "#42505c",
+          800: "#3b454f",
+          900: "#373f47",
+          950: "#20262c",
+          DEFAULT: "#373f47",
+        },
         text: darkModePalette.text,
         subtle: darkModePalette.subtle,
         subtitle: darkModePalette.subtitle,
