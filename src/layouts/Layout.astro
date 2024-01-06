@@ -13,13 +13,14 @@ import "@fontsource/barlow-semi-condensed/400-italic.css";
 
 interface Props {
   title: string;
+  overflowColor: string;
 }
 
-const { title } = Astro.props;
+const { title, overflowColor } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" style={{ backgroundColor: overflowColor }}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
