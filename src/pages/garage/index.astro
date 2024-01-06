@@ -6,32 +6,13 @@ import Footer from "../../layouts/Footer.astro";
 import ExternalLink from "../../components/ExternalLink";
 import Card from "../../components/Card";
 import Quiet from "../../components/Quiet";
-import palette from "../../palette";
-
-const projects: {
-  id: string;
-  label: string;
-  lastUpdated: Date;
-  github?: string;
-}[] = [
-  { id: "test1", label: "Test 1", lastUpdated: new Date() },
-  { id: "test2", label: "Test 2", lastUpdated: new Date() },
-  { id: "test3", label: "Test 3", lastUpdated: new Date() },
-  { id: "test1", label: "Test 1", lastUpdated: new Date() },
-  { id: "test2", label: "Test 2", lastUpdated: new Date() },
-  { id: "test3", label: "Test 3", lastUpdated: new Date() },
-  { id: "test1", label: "Test 1", lastUpdated: new Date() },
-];
+import projects from "../../projects";
 ---
 
-<Layout title="garage | barlo" overflowColor={palette.footer}>
-  <div style={{ backgroundColor: palette.bg, color: palette.text }}>
+<Layout title="garage | barlo">
+  <div class="bg-bg text-text">
     <div class="flex min-h-screen flex-col leading-relaxed">
-      <Header
-        backgroundColor={palette.bg}
-        titleColor={palette.title}
-        subdomainColor={palette.subdomain}
-      />
+      <Header />
       <Three>
         <div class="mb-4">
           <h2 class="text-xl pb-1 lowercase">garage</h2>
@@ -62,8 +43,15 @@ const projects: {
             {
               projects.map((project) => (
                 <a href={`/garage/${project.id}`}>
-                  <Card className="w-full transition-transform hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:transform-none">
-                    {project.label}
+                  <Card className="w-full h-32 overflow-hidden relative p-0 transition-transform hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:transform-none">
+                    <div
+                      class={`h-full w-full bg-center bg-cover bg-[url('${project.imgUrl}')]`}
+                    />
+                    <div
+                      class={`z-10 bg-card h-10 w-1/2 absolute bottom-0 right-0`}
+                    >
+                      {project.label}
+                    </div>
                   </Card>
                 </a>
               ))

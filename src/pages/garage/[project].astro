@@ -1,10 +1,8 @@
 ---
+import projects from "../../projects";
+
 export function getStaticPaths() {
-  return [
-    { params: { project: "test1" } },
-    { params: { project: "test2" } },
-    { params: { project: "test3" } },
-  ];
+  return projects.map((project) => ({ params: { project: project.id } }));
 }
 
 const { project } = Astro.params;

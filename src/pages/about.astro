@@ -4,20 +4,15 @@ import Header from "../layouts/Header.astro";
 import Three from "../layouts/Three.astro";
 import Footer from "../layouts/Footer.astro";
 import Quiet from "../components/Quiet";
-import palette from "../palette";
 
 const blurb =
   "I'm a developer working out of Vancouver, Canada. I like to pick up and drop problems, sometimes I solve them.";
 ---
 
-<Layout title="about | barlo" overflowColor={palette.footer}>
-  <div style={{ backgroundColor: palette.bg, color: palette.text }}>
+<Layout title="about | barlo">
+  <div class="bg-bg text-text">
     <div class="flex min-h-screen flex-col leading-relaxed">
-      <Header
-        backgroundColor={palette.bg}
-        titleColor={palette.title}
-        subdomainColor={palette.subdomain}
-      />
+      <Header />
       <Three>
         <div class="mb-4">
           <h2 class="text-xl pb-1 lowercase">james barlow</h2>
@@ -31,15 +26,15 @@ const blurb =
         <div class="mb-4">
           <h2 class="text-xl pb-1 lowercase">topics</h2>
           <div>
-            <span style={{ color: palette.subdomain }}>[always]:</span>
+            <span class="text-subdomain">[always]:</span>
             systems, serendipity, process, design
           </div>
           <div>
-            <span style={{ color: palette.subdomain }}>[atm]:</span>
+            <span class="text-subdomain">[atm]:</span>
             linux, llms, skateboarding, espresso <Quiet>(yeah I know)</Quiet>
           </div>
           <div>
-            <span style={{ color: palette.subdomain }}>[backburner]:</span>
+            <span class="text-subdomain">[backburner]:</span>
             analog photography, 3d printing, gamedev
           </div>
         </div>
