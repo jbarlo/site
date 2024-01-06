@@ -1,12 +1,12 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../layouts/Header.astro";
-import Three from "../layouts/Three.astro";
-import Footer from "../layouts/Footer.astro";
-import ExternalLink from "../components/ExternalLink";
-import Card from "../components/Card";
-import Quiet from "../components/Quiet";
-import palette from "../palette";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../layouts/Header.astro";
+import Three from "../../layouts/Three.astro";
+import Footer from "../../layouts/Footer.astro";
+import ExternalLink from "../../components/ExternalLink";
+import Card from "../../components/Card";
+import Quiet from "../../components/Quiet";
+import palette from "../../palette";
 
 const projects: {
   id: string;
@@ -14,13 +14,13 @@ const projects: {
   lastUpdated: Date;
   github?: string;
 }[] = [
-  { id: "test", label: "Test", lastUpdated: new Date() },
-  { id: "test", label: "Test", lastUpdated: new Date() },
-  { id: "test", label: "Test", lastUpdated: new Date() },
-  { id: "test", label: "Test", lastUpdated: new Date() },
-  { id: "test", label: "Test", lastUpdated: new Date() },
-  { id: "test", label: "Test", lastUpdated: new Date() },
-  { id: "test", label: "Test", lastUpdated: new Date() },
+  { id: "test1", label: "Test 1", lastUpdated: new Date() },
+  { id: "test2", label: "Test 2", lastUpdated: new Date() },
+  { id: "test3", label: "Test 3", lastUpdated: new Date() },
+  { id: "test1", label: "Test 1", lastUpdated: new Date() },
+  { id: "test2", label: "Test 2", lastUpdated: new Date() },
+  { id: "test3", label: "Test 3", lastUpdated: new Date() },
+  { id: "test1", label: "Test 1", lastUpdated: new Date() },
 ];
 ---
 

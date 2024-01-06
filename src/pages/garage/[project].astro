@@ -1,0 +1,13 @@
+---
+export function getStaticPaths() {
+  return [
+    { params: { project: "test1" } },
+    { params: { project: "test2" } },
+    { params: { project: "test3" } },
+  ];
+}
+
+const { project } = Astro.params;
+---
+
+<div>{project}</div>
