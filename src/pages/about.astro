@@ -1,10 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import HeaderTitle from "../components/HeaderTitle";
-import IntroCard from "../components/IntroCard";
 import Header from "../layouts/Header.astro";
 import { colord } from "colord";
 import Three from "../layouts/Three.astro";
+import Footer from "../layouts/Footer.astro";
 
 const lightColors = {
   a: "#4A4063",
@@ -17,6 +16,7 @@ const lightColors = {
 const lightModePalette = {
   title: lightColors.a,
   subdomain: "gray",
+  footer: lightColors.b,
   bg: lightColors.b,
   header: lightColors.b,
   card: lightColors.b,
@@ -36,6 +36,7 @@ const darkModePalette = {
   title: darkColors.b,
   subdomain: darkColors.e,
   bg: darkColors.a,
+  footer: colord(darkColors.a).darken(0.15).toHex(),
   header: colord(darkColors.a).lighten(0.05).toHex(),
   card: colord(darkColors.a).lighten(0.05).toHex(),
   text: colord(darkColors.b).darken(0.1).toHex(),
@@ -74,20 +75,21 @@ const blurb =
           <h2 class="text-xl pb-1 lowercase">topics</h2>
           <div>
             <span style={{ color: palette.subdomain }}>[always]:</span>
-             systems, serendipity, process, design
+            systems, serendipity, process, design
           </div>
           <div>
             <span style={{ color: palette.subdomain }}>[atm]:</span>
-             linux, llms, skateboarding, espresso <i
+            linux, llms, skateboarding, espresso <i
               style={{ color: palette.subtle }}>(yeah I know)</i
             >
           </div>
           <div>
             <span style={{ color: palette.subdomain }}>[backburner]:</span>
-             analog photography, 3d printing, gamedev
+            analog photography, 3d printing, gamedev
           </div>
         </div>
       </Three>
+      <Footer backgroundColor={palette.footer} iconColor={palette.text} />
     </div>
   </div>
 </Layout>

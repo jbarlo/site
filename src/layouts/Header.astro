@@ -10,9 +10,9 @@ const { backgroundColor, titleColor, subdomainColor, iconColor } = Astro.props;
 const pages = [
   { url: "/", title: "home" },
   { url: "/about", title: "about" },
-  //   { url: "/g", title: "blogarden" },
-  //   { url: "/garage", title: "garage" },
-  //   { url: "/cal", title: "cal" },
+  // { url: "/g", title: "blogarden" },
+  // { url: "/garage", title: "garage" },
+  // { url: "/cal", title: "cal" },
 ];
 ---
 
@@ -35,11 +35,6 @@ const pages = [
           ))
         }
       </span>
-    </div>
-    <div class="flex justify-end gap-5">
-      <ExternalLink href="https://www.github.com/jbarlo/">
-        <Github fill={iconColor} />
-      </ExternalLink>
     </div>
   </Three>
 </nav>
