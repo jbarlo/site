@@ -4,28 +4,18 @@ interface CardProps {
   imgUrl: string;
   imgAlt: string;
   href: string;
-  className?: string;
 }
-const Card = ({
-  label,
-  description,
-  imgUrl,
-  imgAlt,
-  href,
-  className,
-}: CardProps) => (
+const Card = ({ label, description, imgUrl, imgAlt, href }: CardProps) => (
   <a
     href={href}
     title={imgAlt}
-    className="text-limed-spruce-950 group transition-transform hover:-translate-y-0.5 focus:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
+    className="text-limed-spruce-950 group aspect-square transition-transform hover:-translate-y-0.5 focus:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
   >
-    <div
-      className={`bg-limed-spruce-200 relative box-border ${className ?? ""}`}
-    >
+    <div className="bg-limed-spruce-200 relative box-border h-full w-full overflow-hidden p-1">
       <img
         src={imgUrl}
         alt={imgAlt}
-        className="bg-limed-spruce-300 saturate-60 h-full w-full transition group-hover:saturate-100 group-focus:saturate-100"
+        className="bg-limed-spruce-300 saturate-60 h-full w-full max-w-none object-cover transition group-hover:saturate-100 group-focus:saturate-100"
       />
       <div className="absolute bottom-0 right-0 z-10 w-full transition-transform group-hover:-translate-y-1 group-focus:-translate-y-1 motion-reduce:transition-none">
         <div className="flex justify-end">
