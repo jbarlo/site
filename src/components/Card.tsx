@@ -25,7 +25,7 @@ const Card = ({
       <img
         src={imgUrl}
         alt={imgAlt}
-        className="bg-limed-spruce-300 h-full w-full"
+        className="bg-limed-spruce-300 saturate-60 h-full w-full transition group-hover:saturate-100 group-focus:saturate-100"
       />
       <div className="absolute bottom-0 right-0 z-10 w-full transition-transform group-hover:-translate-y-1 group-focus:-translate-y-1 motion-reduce:transition-none">
         <div className="flex justify-end">
@@ -36,7 +36,7 @@ const Card = ({
             {label}
           </div>
         </div>
-        <div className="bg-limed-spruce-200 h-5 w-full text-ellipsis pb-5 pl-2 pr-3 text-right text-xs">
+        <div className="bg-limed-spruce-200 h-8 w-full text-ellipsis pl-2 pr-3 text-right text-xs">
           {description}
         </div>
       </div>

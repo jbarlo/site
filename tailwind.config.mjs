@@ -69,6 +69,9 @@ export default {
       screens: {
         "3xl": "1600px",
       },
+      saturate: {
+        60: ".60",
+      },
     },
   },
   plugins: [],
