@@ -43,11 +43,11 @@ export default {
         subdomain: darkModePalette.subdomain,
         footer: darkModePalette.footer,
         "limed-spruce": {
-          50: "#f4f6f7", // fail 80% APCA (dark mode)
-          100: "#e2e8eb", // fail 80% APCA (dark mode)
-          200: "#c8d3d9", // fail 80% APCA (dark mode)
-          300: "#a1b4bf", // fail 80% APCA (dark mode)
-          400: "#748e9c", // fail 80% APCA (dark mode)
+          50: "#f4f6f7",
+          100: "#e2e8eb",
+          200: "#c8d3d9",
+          300: "#a1b4bf",
+          400: "#748e9c",
           500: "#587282",
           600: "#4c5f6e",
           700: "#42505c",
