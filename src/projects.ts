@@ -57,8 +57,8 @@ const projects: {
     imgAlt: "is dog",
   },
   {
-    id: "test1",
-    label: "Test 1",
+    id: "site",
+    label: "Site",
     lastUpdated: new Date(),
     imgUrl:
       "https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg",

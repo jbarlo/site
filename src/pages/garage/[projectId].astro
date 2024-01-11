@@ -1,0 +1,52 @@
+---
+import Footer from "../../layouts/Footer.astro";
+import Header from "../../layouts/Header.astro";
+import Layout from "../../layouts/Layout.astro";
+import Three from "../../layouts/Three.astro";
+import projects from "../../projects";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { projectId: project.id } }));
+}
+
+const { projectId } = Astro.params;
+
+const projectPath = `site/projects/${projectId}`;
+const indexFilePath = `${projectPath}/index.md`;
+const nonIndexFilePathRegex = new RegExp(
+  `${projectPath}/(\\d|\\w|-)+\\.md`,
+  "g",
+);
+const allPosts = await Astro.glob("../../../projects/**/*.md");
+const indexPost = allPosts.filter((post) =>
+  post.file.includes(indexFilePath),
+)[0];
+const projectPosts = allPosts
+  .filter((post) => !post.file.includes(indexFilePath))
+  .filter((post) => !!post.file.match(nonIndexFilePathRegex));
+---
+
+<Layout title="garage | barlo">
+  <div class="bg-limed-spruce text-text">
+    <div class="flex min-h-screen flex-col leading-relaxed">
+      <Header />
+      <Three>
+        <div>
+          {JSON.stringify(indexPost)}
+        </div>
+        <div>
+          {JSON.stringify(projectPosts)}
+        </div>
+        --
+        <div>
+          {
+            projectPosts.map((post) => (
+              <a class="hover:underline">{post.frontmatter.title}</a>
+            ))
+          }
+        </div>
+      </Three>
+      <Footer />
+    </div>
+  </div>
+</Layout>
