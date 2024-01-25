@@ -1,0 +1,44 @@
+---
+import moment from "moment";
+import Quiet from "../components/Quiet";
+import type { MarkdownInstance } from "astro";
+import { getPostHeadingId, getPostTitle } from "../utils";
+import type { ProjectEntryFrontmatter } from "../types";
+
+interface Props {
+  post: MarkdownInstance<ProjectEntryFrontmatter>;
+}
+
+const { post } = Astro.props;
+---
+
+<article class="post">
+  <div class="flex justify-between items-end pb-2">
+    <h3 class="text-lg" id={getPostHeadingId(post)}>
+      {getPostTitle(post)}
+    </h3>
+    <span>
+      {moment(post.frontmatter.created).format("MMM D, YYYY")}
+      {
+        moment(post.frontmatter.created).toISOString() !==
+          moment(post.frontmatter["last-updated"]).toISOString() && (
+          <Quiet>
+            (
+            {`Last updated: ${moment(post.frontmatter["last-updated"]).format(
+              "MMM D, YYYY",
+            )}`}
+            )
+          </Quiet>
+        )
+      }
+    </span>
+  </div>
+  <post.Content />
+</article>
+
+<style>
+  .post :global(p) {
+    @apply leading-snug;
+    @apply pb-3;
+  }
+</style>

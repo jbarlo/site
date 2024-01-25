@@ -2,7 +2,7 @@ const projects: {
   id: string;
   label: string;
   description?: string;
-  lastUpdated: Date;
+  // lastUpdated: Date;
   imgUrl: string;
   imgAlt: string;
   github?: string;
@@ -10,7 +10,7 @@ const projects: {
   {
     id: "site",
     label: "Site",
-    lastUpdated: new Date(),
+    // lastUpdated: new Date(),
     imgUrl:
       "https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg",
     imgAlt: "a test dog",
@@ -18,7 +18,7 @@ const projects: {
   {
     id: "testdog",
     label: "test dog please ignore",
-    lastUpdated: new Date(),
+    // lastUpdated: new Date(),
     imgUrl:
       "https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg",
     imgAlt: "a test dog",
