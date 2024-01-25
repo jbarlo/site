@@ -13,16 +13,16 @@ const projects: {
     // lastUpdated: new Date(),
     imgUrl:
       "https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg",
-    imgAlt: "a test dog",
+    imgAlt: "a test dog please ignore",
   },
-  {
-    id: "testdog",
-    label: "test dog please ignore",
-    // lastUpdated: new Date(),
-    imgUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg",
-    imgAlt: "a test dog",
-  },
+  // {
+  //   id: "testdog",
+  //   label: "test dog please ignore",
+  //   // lastUpdated: new Date(),
+  //   imgUrl:
+  //     "https://upload.wikimedia.org/wikipedia/commons/9/99/Brooks_Chase_Ranger_of_Jolly_Dogs_Jack_Russell.jpg",
+  //   imgAlt: "a test dog please ignore",
+  // },
 ];
 
 export default projects;

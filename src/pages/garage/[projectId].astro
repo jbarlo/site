@@ -21,6 +21,7 @@ const { projectId } = Astro.params;
 
 const project = projects.find((project) => project.id === projectId);
 
+// TODO: look at Astro Content Collections
 const projectPath = `site/projects/${projectId}`;
 const indexFilePath = `${projectPath}/index.md`;
 const nonIndexFilePathRegex = new RegExp(
@@ -47,35 +48,35 @@ const projectPosts: MarkdownInstance<ProjectEntryFrontmatter>[] = allPosts
         <a href="/garage" class="hover:underline pb-4">← back</a>
         <h2 class="text-xl">Project: {project?.label}</h2>
         <indexPost.Content />
-        <hr class="mt-2 mb-2" />
-        <div
-          class="grow gap-2 2xl:gap-5 flex basis-0 sm:flex-col 2xl:flex-row-reverse pb-20 2xl:items-start"
-        >
-          <div class="bg-limed-spruce-700 border p-2 2xl:w-60 sticky top-20">
-            {
-              projectPosts.map((post) => (
-                <div>
-                  <a
-                    class="hover:underline"
-                    href={`#${getPostHeadingId(post)}`}
-                  >
-                    {getPostTitle(post)}
-                  </a>
+        {
+          projectPosts.length > 0 && (
+            <>
+              <hr class="mt-2 mb-2" />
+              <div class="grow gap-2 2xl:gap-5 flex basis-0 sm:flex-col 2xl:flex-row-reverse pb-20 2xl:items-start">
+                <div class="bg-limed-spruce-700 border p-2 2xl:w-60 sticky top-20">
+                  {projectPosts.map((post) => (
+                    <div>
+                      <a
+                        class="hover:underline"
+                        href={`#${getPostHeadingId(post)}`}
+                      >
+                        {getPostTitle(post)}
+                      </a>
+                    </div>
+                  ))}
                 </div>
-              ))
-            }
-          </div>
-          <div class="basis-0 grow">
-            {
-              projectPosts.map((post, i) => (
-                <>
-                  {i > 0 && <hr class="mt-5 mb-4" />}
-                  <ProjectPost post={post} />
-                </>
-              ))
-            }
-          </div>
-        </div>
+                <div class="basis-0 grow">
+                  {projectPosts.map((post, i) => (
+                    <>
+                      {i > 0 && <hr class="mt-5 mb-4" />}
+                      <ProjectPost post={post} />
+                    </>
+                  ))}
+                </div>
+              </div>
+            </>
+          )
+        }
       </Three>
       <Footer />
     </div>

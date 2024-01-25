@@ -1,5 +1,5 @@
 import type { MarkdownInstance } from "astro";
-import type { ProjectEntryFrontmatter } from "./types";
+import { type ProjectEntryFrontmatter } from "./types";
 
 export const getPostHeadingId = (
   post: MarkdownInstance<ProjectEntryFrontmatter>,
@@ -9,4 +9,4 @@ export const getPostHeadingId = (
     .replace(/ /g, "-")}`;
 
 export const getPostTitle = (post: MarkdownInstance<ProjectEntryFrontmatter>) =>
-  `${post.frontmatter["entry-num"]} - ${post.frontmatter.title}`;
+  `${post.frontmatter["entry-num"]}. ${post.frontmatter.title}`;
