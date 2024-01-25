@@ -1,23 +1,14 @@
 import type { FC } from "react";
 
 export interface HeaderTitleProps {
-  titleColor: string;
-  subdomainColor: string;
   suffix?: string;
 }
 
-const HeaderTitle: FC<HeaderTitleProps> = ({
-  titleColor,
-  subdomainColor,
-  suffix,
-}: HeaderTitleProps) => (
-  <h1
-    className="m-0 mb-1 mt-1 inline text-3xl font-normal leading-none"
-    style={{ color: titleColor }}
-  >
+const HeaderTitle: FC<HeaderTitleProps> = ({ suffix }: HeaderTitleProps) => (
+  <h1 className="text-title m-0 mb-1 mt-1 inline text-3xl font-normal leading-none">
     <span style={{ letterSpacing: "0.15em" }}>barl</span>
     <span style={{ letterSpacing: "0.06em" }}>o</span>
-    <span className="font-extralight italic" style={{ color: subdomainColor }}>
+    <span className="text-subdomain font-extralight italic">
       <span
         style={{
           letterSpacing: "0.04em",

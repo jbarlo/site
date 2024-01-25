@@ -1,0 +1,60 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../layouts/Header.astro";
+import Three from "../../layouts/Three.astro";
+import Footer from "../../layouts/Footer.astro";
+import ExternalLink from "../../components/ExternalLink";
+import Card from "../../components/Card";
+import Quiet from "../../components/Quiet";
+import projects from "../../projects";
+---
+
+<Layout title="garage | barlo">
+  <div class="bg-limed-spruce text-text">
+    <div class="flex min-h-screen flex-col leading-relaxed">
+      <Header />
+      <Three>
+        <div class="mb-4">
+          <h2 class="text-xl pb-1 lowercase">garage</h2>
+          <section class="text-sm pb-6">
+            <h3 class="pb-1 lowercase">what is this?</h3>
+            <p class="leading-tight pb-0.5">
+              it's sort of a projects page, but messier. things found here
+              aren't guaranteed to be done or really even good.
+            </p>
+            <p>
+              the focus is on process over results <i>
+                <Quiet>(but hopefully there's a few good results too)</Quiet>
+                .
+              </i>
+            </p>
+            <p class="leading-tight">
+              the name is lifted from <ExternalLink
+                href="https://notes.andymatuschak.org/Work_with_the_garage_door_up"
+              >
+                Andy Matuschak's "Work with the garage door up"
+              </ExternalLink>, which informed the ethos and initially piqued my
+              interest.
+            </p>
+          </section>
+          <section
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-3"
+          >
+            {
+              projects.map((project) => (
+                <Card
+                  label={project.label}
+                  description={project.description}
+                  imgUrl={project.imgUrl}
+                  imgAlt={project.imgAlt}
+                  href={`/garage/${project.id}`}
+                />
+              ))
+            }
+          </section>
+        </div>
+      </Three>
+      <Footer />
+    </div>
+  </div>
+</Layout>

@@ -13,14 +13,13 @@ import "@fontsource/barlow-semi-condensed/400-italic.css";
 
 interface Props {
   title: string;
-  overflowColor: string;
 }
 
-const { title, overflowColor } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" style={{ backgroundColor: overflowColor }}>
+<html lang="en" class="bg-footer">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
@@ -39,5 +38,12 @@ const { title, overflowColor } = Astro.props;
     font-family:
       Barlow Semi Condensed,
       sans-serif;
+  }
+  a.hyper {
+    font-style: italic;
+    text-decoration: underline;
+  }
+  a.hyper:hover {
+    color: #fff;
   }
 </style>

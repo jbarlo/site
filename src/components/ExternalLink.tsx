@@ -7,7 +7,7 @@ const ExternalLink: FC<ExternalLinkProps> = ({
   href,
   children,
 }: PropsWithChildren<ExternalLinkProps>) => (
-  <a href={href} target="_blank" rel="noopener noreferrer">
+  <a className="hyper" href={href} target="_blank" rel="noopener noreferrer">
     {children}
   </a>
 );
