@@ -16,8 +16,8 @@ import projects from "../../projects";
       <Three>
         <div class="mb-4">
           <h2 class="text-xl pb-1 lowercase">garage</h2>
-          <h3 class="text-sm pb-1 lowercase">what is this?</h3>
-          <div>
+          <section class="text-sm pb-6">
+            <h3 class="pb-1 lowercase">what is this?</h3>
             <p class="leading-tight pb-0.5">
               it's sort of a projects page, but messier. things found here
               aren't guaranteed to be done or really even good.
@@ -36,8 +36,8 @@ import projects from "../../projects";
               </ExternalLink>, which informed the ethos and initially piqued my
               interest.
             </p>
-          </div>
-          <div
+          </section>
+          <section
             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-3"
           >
             {
@@ -47,11 +47,10 @@ import projects from "../../projects";
                   description={project.description}
                   imgUrl={project.imgUrl}
                   imgAlt={project.imgAlt}
-                  href={`/garage/${project.id}`}
                 />
               ))
             }
-          </div>
+          </section>
         </div>
       </Three>
       <Footer />
