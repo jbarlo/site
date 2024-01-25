@@ -10,6 +10,12 @@ interface Props {
 }
 
 const { post } = Astro.props;
+
+// TODO change frontmatter parser to assume local time
+const created = post.frontmatter.created.toLowerCase().replace("z", "");
+const lastUpdated = post.frontmatter["last-updated"]
+  .toLowerCase()
+  .replace("z", "");
 ---
 
 <article class="post">
@@ -18,16 +24,11 @@ const { post } = Astro.props;
       {getPostTitle(post)}
     </h3>
     <span>
-      {moment(post.frontmatter.created).format("MMM D, YYYY")}
+      {moment(created).format("MMM D, YYYY")}
       {
-        moment(post.frontmatter.created).toISOString() !==
-          moment(post.frontmatter["last-updated"]).toISOString() && (
+        moment(created).toISOString() !== moment(lastUpdated).toISOString() && (
           <Quiet>
-            (
-            {`Last updated: ${moment(post.frontmatter["last-updated"]).format(
-              "MMM D, YYYY",
-            )}`}
-            )
+            ({`Last updated: ${moment(lastUpdated).format("MMM D, YYYY")}`})
           </Quiet>
         )
       }
