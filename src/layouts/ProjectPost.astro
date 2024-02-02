@@ -19,19 +19,28 @@ const lastUpdated = post.frontmatter["last-updated"]
 ---
 
 <article class="post">
-  <div class="flex justify-between items-end pb-2">
+  <div
+    class="flex gap-x-2 flex-col sm:flex-row sm:justify-between sm:items-end pb-2"
+  >
     <h3 class="text-lg" id={getPostHeadingId(post)}>
-      {getPostTitle(post)}
+      <a class="hover:underline" href={`#${getPostHeadingId(post)}`}>
+        {getPostTitle(post)}
+      </a>
     </h3>
-    <span>
-      {moment(created).format("MMM D, YYYY")}
-      {
-        moment(created).toISOString() !== moment(lastUpdated).toISOString() && (
-          <Quiet>
-            ({`Last updated: ${moment(lastUpdated).format("MMM D, YYYY")}`})
-          </Quiet>
-        )
-      }
+    <span class="sm:text-right">
+      <span class="inline-block">
+        {moment(created).format("MMM D, YYYY")}
+      </span>
+      <span class="inline-block">
+        {
+          moment(created).toISOString() !==
+            moment(lastUpdated).toISOString() && (
+            <Quiet>
+              ({`Last updated: ${moment(lastUpdated).format("MMM D, YYYY")}`})
+            </Quiet>
+          )
+        }
+      </span>
     </span>
   </div>
   <post.Content />
