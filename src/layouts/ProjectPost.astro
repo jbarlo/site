@@ -1,21 +1,22 @@
 ---
 import moment from "moment";
 import Quiet from "../components/Quiet";
-import type { MarkdownInstance } from "astro";
 import { getPostHeadingId, getPostTitle } from "../utils";
-import type { ProjectEntryFrontmatter } from "../types";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  post: MarkdownInstance<ProjectEntryFrontmatter>;
+  post: CollectionEntry<"projects">;
 }
 
 const { post } = Astro.props;
 
 // TODO change frontmatter parser to assume local time
-const created = post.frontmatter.created.toLowerCase().replace("z", "");
-const lastUpdated = post.frontmatter["last-updated"]
-  .toLowerCase()
+const created = moment(post.data.created).toISOString().replace("z", "");
+const lastUpdated = moment(post.data["last-updated"])
+  .toISOString()
   .replace("z", "");
+
+const { Content: PostContent } = await post.render();
 ---
 
 <article class="post">
@@ -43,7 +44,7 @@ const lastUpdated = post.frontmatter["last-updated"]
       </span>
     </span>
   </div>
-  <post.Content />
+  <PostContent />
 </article>
 
 <style>

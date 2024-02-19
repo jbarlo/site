@@ -1,43 +1,38 @@
 ---
-import type { MarkdownInstance } from "astro";
 import Footer from "../../layouts/Footer.astro";
 import Header from "../../layouts/Header.astro";
 import Layout from "../../layouts/Layout.astro";
 import Three from "../../layouts/Three.astro";
-import projects from "../../projects";
 import {
-  isProjectEntryFile,
-  type ProjectEntryFrontmatter,
-  type ProjectFrontmatter,
-} from "../../types";
-import { getPostHeadingId, getPostTitle } from "../../utils";
+  getPostHeadingId,
+  getPostTitle,
+  getProjectSlugFromIndexSlug,
+} from "../../utils";
 import ProjectPost from "../../layouts/ProjectPost.astro";
+import { getCollection } from "astro:content";
+import { isNil, compact } from "lodash-es";
 
-export function getStaticPaths() {
-  return projects.map((project) => ({ params: { projectId: project.id } }));
-}
+export const getStaticPaths = async () => {
+  const projects = await getCollection("projects", ({ data }) => data.isIndex);
+  return compact(
+    projects.map((project) => {
+      const projectId = getProjectSlugFromIndexSlug(project.slug);
+      if (isNil(projectId)) return null;
+      return { params: { projectId } };
+    }),
+  );
+};
 
 const { projectId } = Astro.params;
 
-const project = projects.find((project) => project.id === projectId);
+const projectEntries = await getCollection("projects", ({ slug }) =>
+  slug.startsWith(projectId),
+);
 
-// TODO: look at Astro Content Collections
-const projectPath = `site/projects/${projectId}`;
-const indexFilePath = `${projectPath}/index.md`;
-const nonIndexFilePathRegex = new RegExp(
-  `${projectPath}/(\\d|\\w|-)+\\.md`,
-  "g",
-);
-const allPosts = await Astro.glob<ProjectFrontmatter>(
-  "../../../projects/**/*.md",
-);
-const indexPost = allPosts.filter((post) =>
-  post.file.includes(indexFilePath),
-)[0];
-const projectPosts: MarkdownInstance<ProjectEntryFrontmatter>[] = allPosts
-  .filter((post) => !post.file.includes(indexFilePath))
-  .filter((post) => !!post.file.match(nonIndexFilePathRegex))
-  .filter(isProjectEntryFile);
+const indexEntry = projectEntries.find((entry) => entry.data.isIndex);
+const IndexContent = !indexEntry ? null : (await indexEntry.render()).Content;
+
+const projectPosts = projectEntries.filter(({ data }) => !data.isIndex);
 ---
 
 <Layout title="garage | barlo">
@@ -46,8 +41,8 @@ const projectPosts: MarkdownInstance<ProjectEntryFrontmatter>[] = allPosts
       <Header />
       <Three>
         <a href="/garage" class="hover:underline pb-4">← back</a>
-        <h2 class="text-xl">Project: {project?.label}</h2>
-        <indexPost.Content />
+        <h2 class="text-xl">Project: {indexEntry?.data.label}</h2>
+        {IndexContent && <IndexContent />}
         {
           projectPosts.length > 0 && (
             <>

@@ -1,12 +1,16 @@
-import type { MarkdownInstance } from "astro";
-import { type ProjectEntryFrontmatter } from "./types";
+import type { CollectionEntry } from "astro:content";
 
-export const getPostHeadingId = (
-  post: MarkdownInstance<ProjectEntryFrontmatter>,
-) =>
-  `${post.frontmatter["entry-num"]}-${post.frontmatter.title
-    .toLowerCase()
-    .replace(/ /g, "-")}`;
+export const getPostHeadingId = (post: CollectionEntry<"projects">) =>
+  post.data.isIndex
+    ? ""
+    : `${post.data["entry-num"]}-${post.data.title
+        .toLowerCase()
+        .replace(/ /g, "-")}`;
 
-export const getPostTitle = (post: MarkdownInstance<ProjectEntryFrontmatter>) =>
-  `${post.frontmatter["entry-num"]}. ${post.frontmatter.title}`;
+export const getPostTitle = (post: CollectionEntry<"projects">) =>
+  post.data.isIndex
+    ? post.data.label
+    : `${post.data["entry-num"]}. ${post.data.title}`;
+
+export const getProjectSlugFromIndexSlug = (slug: string): string | undefined =>
+  slug.split("/")[0];

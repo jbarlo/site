@@ -6,7 +6,10 @@ import Footer from "../../layouts/Footer.astro";
 import ExternalLink from "../../components/ExternalLink";
 import Card from "../../components/Card";
 import Quiet from "../../components/Quiet";
-import projects from "../../projects";
+import { getCollection } from "astro:content";
+import { getProjectSlugFromIndexSlug } from "../../utils";
+
+const projects = await getCollection("projects", ({ data }) => data.isIndex);
 ---
 
 <Layout title="garage | barlo">
@@ -43,11 +46,13 @@ import projects from "../../projects";
             {
               projects.map((project) => (
                 <Card
-                  label={project.label}
-                  description={project.description}
-                  imgUrl={project.imgUrl}
-                  imgAlt={project.imgAlt}
-                  href={`/garage/${project.id}`}
+                  label={project.data.label}
+                  description={project.data.description}
+                  imgUrl={project.data.imgUrl}
+                  imgAlt={project.data.imgAlt}
+                  href={`/garage/${
+                    getProjectSlugFromIndexSlug(project.slug) ?? ""
+                  }`}
                 />
               ))
             }
