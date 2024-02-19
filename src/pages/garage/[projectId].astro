@@ -49,7 +49,9 @@ const projectPosts = projectEntries.filter(({ data }) => !data.isIndex);
       <Three>
         <a href="/garage" class="hover:underline pb-4">← back</a>
         <h2 class="text-xl">Project: {indexEntyLabel}</h2>
-        {IndexContent && <IndexContent />}
+        <div class="post">
+          {IndexContent && <IndexContent />}
+        </div>
         {
           projectPosts.length > 0 && (
             <>
@@ -89,5 +91,10 @@ const projectPosts = projectEntries.filter(({ data }) => !data.isIndex);
   body,
   html {
     scroll-padding-top: 20%;
+  }
+
+  .post :global(a) {
+    @apply underline;
+    @apply italic;
   }
 </style>
