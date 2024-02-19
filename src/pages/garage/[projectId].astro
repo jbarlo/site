@@ -6,7 +6,7 @@ import Three from "../../layouts/Three.astro";
 import {
   getPostHeadingId,
   getPostTitle,
-  getProjectSlugFromIndexSlug,
+  getProjectSlugFromSlug,
 } from "../../utils";
 import ProjectPost from "../../layouts/ProjectPost.astro";
 import { getCollection } from "astro:content";
@@ -16,7 +16,7 @@ export const getStaticPaths = async () => {
   const projects = await getCollection("projects", ({ data }) => data.isIndex);
   return compact(
     projects.map((project) => {
-      const projectId = getProjectSlugFromIndexSlug(project.slug);
+      const projectId = getProjectSlugFromSlug(project.slug);
       if (isNil(projectId)) return null;
       return { params: { projectId } };
     }),

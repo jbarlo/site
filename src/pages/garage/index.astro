@@ -7,7 +7,7 @@ import ExternalLink from "../../components/ExternalLink";
 import Card from "../../components/Card";
 import Quiet from "../../components/Quiet";
 import { getCollection } from "astro:content";
-import { getProjectSlugFromIndexSlug } from "../../utils";
+import { getProjectSlugFromSlug } from "../../utils";
 
 const projects = await getCollection("projects", ({ data }) => data.isIndex);
 ---
@@ -50,9 +50,7 @@ const projects = await getCollection("projects", ({ data }) => data.isIndex);
                   description={project.data.description}
                   imgUrl={project.data.imgUrl}
                   imgAlt={project.data.imgAlt}
-                  href={`/garage/${
-                    getProjectSlugFromIndexSlug(project.slug) ?? ""
-                  }`}
+                  href={`/garage/${getProjectSlugFromSlug(project.slug) ?? ""}`}
                 />
               ))
             }

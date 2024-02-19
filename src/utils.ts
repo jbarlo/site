@@ -12,5 +12,5 @@ export const getPostTitle = (post: CollectionEntry<"projects">) =>
     ? post.data.label
     : `${post.data["entry-num"]}. ${post.data.title}`;
 
-export const getProjectSlugFromIndexSlug = (slug: string): string | undefined =>
+export const getProjectSlugFromSlug = (slug: string): string | undefined =>
   slug.split("/")[0];
