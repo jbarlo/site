@@ -10,6 +10,8 @@ interface Props {
 
 const { post } = Astro.props;
 
+// TODO More consistent and clear hyperlinking. little icon would help
+
 // TODO change frontmatter parser to assume local time
 const created = moment(post.data.created).toISOString().replace("z", "");
 const lastUpdated = moment(post.data["last-updated"])
@@ -44,7 +46,9 @@ const { Content: PostContent } = await post.render();
       </span>
     </span>
   </div>
-  <PostContent />
+  <div class="postBody">
+    <PostContent />
+  </div>
 </article>
 
 <style>
@@ -54,5 +58,9 @@ const { Content: PostContent } = await post.render();
   }
   .post :global(img) {
     @apply m-auto;
+  }
+  .post .postBody :global(a) {
+    @apply underline;
+    @apply italic;
   }
 </style>
