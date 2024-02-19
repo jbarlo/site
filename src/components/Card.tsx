@@ -9,7 +9,7 @@ const Card = ({ label, description, imgUrl, imgAlt, href }: CardProps) => (
   <a
     href={href}
     title={imgAlt}
-    className="group aspect-square text-limed-spruce-950 transition-transform hover:-translate-y-0.5 focus:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
+    className="group aspect-square not-italic text-limed-spruce-950 transition-transform hover:-translate-y-0.5 hover:text-limed-spruce-950 focus:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
   >
     <div className="relative box-border h-full w-full overflow-hidden bg-limed-spruce-200 p-1">
       <img

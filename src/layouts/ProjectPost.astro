@@ -10,7 +10,7 @@ interface Props {
 
 const { post } = Astro.props;
 
-// TODO More consistent and clear hyperlinking. little icon would help
+// TODO More consistent and clear external hyperlinking. little icon would help
 // TODO code block styles
 
 // TODO change frontmatter parser to assume local time
@@ -27,7 +27,10 @@ const { Content: PostContent } = await post.render();
     class="flex gap-x-2 flex-col sm:flex-row sm:justify-between sm:items-end pb-2"
   >
     <h3 class="text-lg" id={getPostHeadingId(post)}>
-      <a class="hover:underline" href={`#${getPostHeadingId(post)}`}>
+      <a
+        class="no-underline not-italic hover:underline"
+        href={`#${getPostHeadingId(post)}`}
+      >
         {getPostTitle(post)}
       </a>
     </h3>
@@ -47,7 +50,7 @@ const { Content: PostContent } = await post.render();
       </span>
     </span>
   </div>
-  <div class="postBody">
+  <div>
     <PostContent />
   </div>
 </article>
@@ -59,9 +62,5 @@ const { Content: PostContent } = await post.render();
   }
   .post :global(img) {
     @apply m-auto;
-  }
-  .post .postBody :global(a) {
-    @apply underline;
-    @apply italic;
   }
 </style>

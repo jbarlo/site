@@ -47,9 +47,9 @@ const projectPosts = projectEntries.filter(({ data }) => !data.isIndex);
     <div class="flex min-h-screen flex-col leading-relaxed">
       <Header />
       <Three>
-        <a href="/garage" class="hover:underline pb-4">← back</a>
+        <a href="/garage" class="no-underline hover:underline pb-4">← back</a>
         <h2 class="text-xl">Project: {indexEntyLabel}</h2>
-        <div class="post">
+        <div>
           {IndexContent && <IndexContent />}
         </div>
         {
@@ -61,7 +61,7 @@ const projectPosts = projectEntries.filter(({ data }) => !data.isIndex);
                   {projectPosts.map((post) => (
                     <div>
                       <a
-                        class="hover:underline"
+                        class="no-underline hover:underline"
                         href={`#${getPostHeadingId(post)}`}
                       >
                         {getPostTitle(post)}
@@ -91,10 +91,5 @@ const projectPosts = projectEntries.filter(({ data }) => !data.isIndex);
   body,
   html {
     scroll-padding-top: 20%;
-  }
-
-  .post :global(a) {
-    @apply underline;
-    @apply italic;
   }
 </style>

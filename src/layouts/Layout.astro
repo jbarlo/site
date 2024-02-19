@@ -33,17 +33,20 @@ const { title } = Astro.props;
   </body>
 </html>
 <style is:global>
+  @tailwind base;
   html {
     font-size: 20px;
     font-family:
       Barlow Semi Condensed,
       sans-serif;
   }
-  a.hyper {
-    font-style: italic;
-    text-decoration: underline;
-  }
-  a.hyper:hover {
-    color: #fff;
+  @layer base {
+    a {
+      font-style: italic;
+      text-decoration: underline;
+    }
+    a:hover {
+      color: #fff;
+    }
   }
 </style>

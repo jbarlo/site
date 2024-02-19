@@ -8,7 +8,7 @@ export interface HoverableLinkProps {
 
 const HoverableLink: FC<HoverableLinkProps> = ({ currUrl, toUrl, title }) => (
   <a
-    className={`text-xl hover:underline ${
+    className={`text-xl not-italic no-underline hover:underline ${
       currUrl === toUrl ? "underline" : ""
     }`}
     href={toUrl}

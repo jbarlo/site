@@ -65,8 +65,8 @@ const posts: {
           {
             posts.map((p) => (
               <article class="pl-4 pr-4">
-                <h3 class="text-lg hover:underline">
-                  <a href={p.linkTo}>
+                <h3 class="text-lg">
+                  <a href={p.linkTo} class="no-underline hover:underline">
                     {p.title} — {p.formattedDate}
                   </a>
                 </h3>
