@@ -11,6 +11,7 @@ interface Props {
 const { post } = Astro.props;
 
 // TODO More consistent and clear hyperlinking. little icon would help
+// TODO code block styles
 
 // TODO change frontmatter parser to assume local time
 const created = moment(post.data.created).toISOString().replace("z", "");
