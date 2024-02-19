@@ -1,4 +1,13 @@
-import type { CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { isNil } from "lodash-es";
+
+export const getPublishedProjects = (
+  predicate?: Parameters<typeof getCollection<"projects">>[1],
+) =>
+  getCollection(
+    "projects",
+    (post) => post.data.publish && (isNil(predicate) || predicate(post)),
+  );
 
 export const getPostHeadingId = (post: CollectionEntry<"projects">) =>
   post.data.isIndex

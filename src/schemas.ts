@@ -1,6 +1,7 @@
 import { z } from "astro/zod";
 
 export const projectEntrySchema = z.object({
+  publish: z.boolean().default(true),
   isIndex: z.undefined(),
   "entry-num": z.number(),
   title: z.string(),
@@ -9,6 +10,7 @@ export const projectEntrySchema = z.object({
 });
 
 export const projectIndexSchema = z.object({
+  publish: z.boolean().default(true),
   isIndex: z.literal(true),
   label: z.string(),
   description: z.string().optional(),

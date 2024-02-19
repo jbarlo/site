@@ -3,13 +3,16 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../layouts/Header.astro";
 import Three from "../layouts/Three.astro";
 import Footer from "../layouts/Footer.astro";
-import { getCollection } from "astro:content";
 import { orderBy, groupBy, compact, flatMap, map } from "lodash-es";
 import moment from "moment";
-import { getProjectSlugFromSlug, getPostHeadingId } from "../utils";
+import {
+  getProjectSlugFromSlug,
+  getPostHeadingId,
+  getPublishedProjects,
+} from "../utils";
 import { projectIndexSchema } from "../schemas";
 
-const projects = await getCollection("projects");
+const projects = await getPublishedProjects();
 
 const projectsWithIndexLabel = compact(
   flatMap(

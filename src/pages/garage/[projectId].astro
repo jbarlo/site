@@ -7,13 +7,13 @@ import {
   getPostHeadingId,
   getPostTitle,
   getProjectSlugFromSlug,
+  getPublishedProjects,
 } from "../../utils";
 import ProjectPost from "../../layouts/ProjectPost.astro";
-import { getCollection } from "astro:content";
 import { isNil, compact } from "lodash-es";
 
 export const getStaticPaths = async () => {
-  const projects = await getCollection("projects", ({ data }) => data.isIndex);
+  const projects = await getPublishedProjects(({ data }) => data.isIndex);
   return compact(
     projects.map((project) => {
       const projectId = getProjectSlugFromSlug(project.slug);
@@ -25,7 +25,7 @@ export const getStaticPaths = async () => {
 
 const { projectId } = Astro.params;
 
-const projectEntries = await getCollection("projects", ({ slug }) =>
+const projectEntries = await getPublishedProjects(({ slug }) =>
   slug.startsWith(projectId),
 );
 
