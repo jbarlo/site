@@ -11,6 +11,7 @@ import {
 } from "../../utils";
 import ProjectPost from "../../layouts/ProjectPost.astro";
 import { isNil, compact } from "lodash-es";
+import { projectIndexSchema } from "../../schemas";
 
 export const getStaticPaths = async () => {
   const projects = await getPublishedProjects(({ data }) => data.isIndex);
@@ -30,7 +31,13 @@ const projectEntries = await getPublishedProjects(({ slug }) =>
 );
 
 const indexEntry = projectEntries.find((entry) => entry.data.isIndex);
-const IndexContent = !indexEntry ? null : (await indexEntry.render()).Content;
+const IndexContent = isNil(indexEntry)
+  ? null
+  : (await indexEntry.render()).Content;
+
+// appease TS
+const indexParseRes = projectIndexSchema.safeParse(indexEntry);
+const indexEntyLabel = indexParseRes.success ? indexParseRes.data.label : "";
 
 const projectPosts = projectEntries.filter(({ data }) => !data.isIndex);
 ---
@@ -41,7 +48,7 @@ const projectPosts = projectEntries.filter(({ data }) => !data.isIndex);
       <Header />
       <Three>
         <a href="/garage" class="hover:underline pb-4">← back</a>
-        <h2 class="text-xl">Project: {indexEntry?.data.label}</h2>
+        <h2 class="text-xl">Project: {indexEntyLabel}</h2>
         {IndexContent && <IndexContent />}
         {
           projectPosts.length > 0 && (

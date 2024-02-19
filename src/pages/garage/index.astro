@@ -7,8 +7,21 @@ import ExternalLink from "../../components/ExternalLink";
 import Card from "../../components/Card";
 import Quiet from "../../components/Quiet";
 import { getProjectSlugFromSlug, getPublishedProjects } from "../../utils";
+import { projectIndexSchema } from "../../schemas";
+import type { z } from "astro:content";
+import { compact } from "lodash-es";
 
 const projects = await getPublishedProjects(({ data }) => data.isIndex);
+// appease TS, filter against typeguard
+const projectIndices: (z.infer<typeof projectIndexSchema> & {
+  slug: (typeof projects)[number]["slug"];
+})[] = compact(
+  projects.map((project) => {
+    const res = projectIndexSchema.safeParse(project.data);
+    if (!res.success) return null;
+    return { ...res.data, slug: project.slug };
+  }),
+);
 ---
 
 <Layout title="garage | barlo">
@@ -43,12 +56,12 @@ const projects = await getPublishedProjects(({ data }) => data.isIndex);
             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-3"
           >
             {
-              projects.map((project) => (
+              projectIndices.map((project) => (
                 <Card
-                  label={project.data.label}
-                  description={project.data.description}
-                  imgUrl={project.data.imgUrl}
-                  imgAlt={project.data.imgAlt}
+                  label={project.label}
+                  description={project.description}
+                  imgUrl={project.imgUrl}
+                  imgAlt={project.imgAlt}
                   href={`/garage/${getProjectSlugFromSlug(project.slug) ?? ""}`}
                 />
               ))
