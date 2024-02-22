@@ -12,6 +12,7 @@
     "@astrojs/check": "^0.3.1",
     "@astrojs/react": "^3.0.7",
     "@astrojs/tailwind": "^5.0.3",
+    "@fontsource/barlow": "^5.0.8",
     "@fontsource/barlow-semi-condensed": "^5.0.18",
     "@fontsource/iosevka-etoile": "^5.0.7",
     "@types/react": "^18.2.42",
