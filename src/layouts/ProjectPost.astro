@@ -10,9 +10,6 @@ interface Props {
 
 const { post } = Astro.props;
 
-// TODO More consistent and clear external hyperlinking. little icon would help
-
-// TODO change frontmatter parser to assume local time
 const created = moment(post.data.created).toISOString().replace("z", "");
 const lastUpdated = moment(post.data["last-updated"])
   .toISOString()
