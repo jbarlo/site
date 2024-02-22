@@ -10,6 +10,7 @@ import "@fontsource/barlow-semi-condensed/800.css";
 import "@fontsource/barlow-semi-condensed/900.css";
 import "@fontsource/barlow-semi-condensed/200-italic.css";
 import "@fontsource/barlow-semi-condensed/400-italic.css";
+import "@fontsource/iosevka-etoile";
 
 interface Props {
   title: string;
@@ -47,6 +48,17 @@ const { title } = Astro.props;
     }
     a:hover {
       color: #fff;
+    }
+    code {
+      font-family: "Iosevka Etoile", monospace;
+      font-size: 0.8em;
+      @apply rounded;
+      @apply bg-limed-spruce-700;
+      @apply pl-1;
+      @apply pr-1;
+      @apply pt-1;
+      @apply pb-0.5;
+      display: inline-block;
     }
   }
 </style>

@@ -11,7 +11,6 @@ interface Props {
 const { post } = Astro.props;
 
 // TODO More consistent and clear external hyperlinking. little icon would help
-// TODO code block styles
 
 // TODO change frontmatter parser to assume local time
 const created = moment(post.data.created).toISOString().replace("z", "");
@@ -62,5 +61,10 @@ const { Content: PostContent } = await post.render();
   }
   .post :global(img) {
     @apply m-auto;
+  }
+  .post :global(ul) {
+    @apply list-disc;
+    @apply list-inside;
+    @apply leading-snug;
   }
 </style>
