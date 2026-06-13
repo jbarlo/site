@@ -11,6 +11,7 @@ import "@fontsource/barlow-semi-condensed/900.css";
 import "@fontsource/barlow-semi-condensed/200-italic.css";
 import "@fontsource/barlow-semi-condensed/400-italic.css";
 import "@fontsource/iosevka-etoile";
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -34,7 +35,8 @@ const { title } = Astro.props;
   </body>
 </html>
 <style is:global>
-  @tailwind base;
+  @reference "../styles/global.css";
+
   html {
     font-size: 20px;
     font-family:

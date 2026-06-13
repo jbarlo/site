@@ -2,7 +2,7 @@ import { z } from "astro/zod";
 
 export const projectEntrySchema = z.object({
   publish: z.boolean().default(true),
-  isIndex: z.undefined(),
+  isIndex: z.literal(false).optional(),
   "entry-num": z.number(),
   title: z.string(),
   created: z.date(),
@@ -21,7 +21,7 @@ export const projectIndexSchema = z.object({
   "last-updated": z.date(),
 });
 
-export const projectSchema = z.discriminatedUnion("isIndex", [
-  projectEntrySchema,
+export const projectSchema = z.union([
   projectIndexSchema,
+  projectEntrySchema,
 ]);

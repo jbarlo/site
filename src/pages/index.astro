@@ -18,7 +18,7 @@ const projectsWithIndexLabel = compact(
   flatMap(
     groupBy(projects, (p) => getProjectSlugFromSlug(p.id)),
     (group) => {
-      const index = group.find((p) => p.data.isIndex);
+      const index = group.find((p) => p.data.isIndex === true);
       if (!index) return null;
 
       const t = projectIndexSchema.safeParse(index.data);
@@ -44,12 +44,12 @@ const posts: {
 }[] = orderedProjects.slice(0, 3).map((p) => {
   return {
     title: `[Project: ${p.label}]${
-      p.post.data.isIndex ? "" : ` ${p.post.data.title}`
+      p.post.data.isIndex === true ? "" : ` ${p.post.data.title}`
     }`,
     formattedDate: moment(p.post.data.created).format("YYYY-MM-DD"),
-    snippet: p.post.body,
-    linkTo: `/garage/${getProjectSlugFromSlug(p.post.slug)}${
-      !p.post.data.isIndex ? `#${getPostHeadingId(p.post)}` : ""
+    snippet: p.post.body ?? "",
+    linkTo: `/garage/${getProjectSlugFromSlug(p.post.id)}${
+      p.post.data.isIndex !== true ? `#${getPostHeadingId(p.post)}` : ""
     }`,
   };
 });
