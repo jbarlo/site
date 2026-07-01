@@ -5,6 +5,9 @@ static/
 # generated types
 .astro/
 
+# direnv
+.direnv/
+
 # dependencies
 node_modules/
 
