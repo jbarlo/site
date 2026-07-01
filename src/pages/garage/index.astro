@@ -8,18 +8,18 @@ import Card from "../../components/Card";
 import Quiet from "../../components/Quiet";
 import { getProjectSlugFromSlug, getPublishedProjects } from "../../utils";
 import { projectIndexSchema } from "../../schemas";
-import type { z } from "astro:content";
+import type { z } from "astro/zod";
 import { compact } from "lodash-es";
 
-const projects = await getPublishedProjects(({ data }) => data.isIndex);
+const projects = await getPublishedProjects(({ data }) => data.isIndex === true);
 // appease TS, filter against typeguard
 const projectIndices: (z.infer<typeof projectIndexSchema> & {
-  slug: (typeof projects)[number]["slug"];
+  id: (typeof projects)[number]["id"];
 })[] = compact(
   projects.map((project) => {
     const res = projectIndexSchema.safeParse(project.data);
     if (!res.success) return null;
-    return { ...res.data, slug: project.slug };
+    return { ...res.data, id: project.id };
   }),
 );
 ---
@@ -62,7 +62,7 @@ const projectIndices: (z.infer<typeof projectIndexSchema> & {
                   description={project.description}
                   imgUrl={project.imgUrl}
                   imgAlt={project.imgAlt}
-                  href={`/garage/${getProjectSlugFromSlug(project.slug) ?? ""}`}
+                  href={`/garage/${getProjectSlugFromSlug(project.id) ?? ""}`}
                 />
               ))
             }

@@ -2,7 +2,7 @@
 import moment from "moment";
 import Quiet from "../components/Quiet";
 import { getPostHeadingId, getPostTitle } from "../utils";
-import type { CollectionEntry } from "astro:content";
+import { render, type CollectionEntry } from "astro:content";
 
 interface Props {
   post: CollectionEntry<"projects">;
@@ -15,7 +15,7 @@ const lastUpdated = moment(post.data["last-updated"])
   .toISOString()
   .replace("z", "");
 
-const { Content: PostContent } = await post.render();
+const { Content: PostContent } = await render(post);
 ---
 
 <article class="post">
@@ -52,6 +52,8 @@ const { Content: PostContent } = await post.render();
 </article>
 
 <style>
+  @reference "../styles/global.css";
+
   .post :global(p) {
     @apply leading-snug;
     @apply pb-3;

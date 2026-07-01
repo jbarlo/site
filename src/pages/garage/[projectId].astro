@@ -12,12 +12,13 @@ import {
 import ProjectPost from "../../layouts/ProjectPost.astro";
 import { isNil, compact } from "lodash-es";
 import { projectIndexSchema } from "../../schemas";
+import { render } from "astro:content";
 
 export const getStaticPaths = async () => {
-  const projects = await getPublishedProjects(({ data }) => data.isIndex);
+  const projects = await getPublishedProjects(({ data }) => data.isIndex === true);
   return compact(
     projects.map((project) => {
-      const projectId = getProjectSlugFromSlug(project.slug);
+      const projectId = getProjectSlugFromSlug(project.id);
       if (isNil(projectId)) return null;
       return { params: { projectId } };
     }),
@@ -26,20 +27,20 @@ export const getStaticPaths = async () => {
 
 const { projectId } = Astro.params;
 
-const projectEntries = await getPublishedProjects(({ slug }) =>
-  slug.startsWith(projectId),
+const projectEntries = await getPublishedProjects(({ id }) =>
+  id.startsWith(projectId),
 );
 
-const indexEntry = projectEntries.find((entry) => entry.data.isIndex);
+const indexEntry = projectEntries.find((entry) => entry.data.isIndex === true);
 const IndexContent = isNil(indexEntry)
   ? null
-  : (await indexEntry.render()).Content;
+  : (await render(indexEntry)).Content;
 
 // appease TS
-const indexParseRes = projectIndexSchema.safeParse(indexEntry);
+const indexParseRes = projectIndexSchema.safeParse(indexEntry?.data);
 const indexEntyLabel = indexParseRes.success ? indexParseRes.data.label : "";
 
-const projectPosts = projectEntries.filter(({ data }) => !data.isIndex);
+const projectPosts = projectEntries.filter(({ data }) => data.isIndex !== true);
 ---
 
 <Layout title="garage | barlo">
