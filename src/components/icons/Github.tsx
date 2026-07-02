@@ -1,4 +1,3 @@
-export interface Props {}
 const Github = () => (
   <svg
     style={{ width: "30px" }}

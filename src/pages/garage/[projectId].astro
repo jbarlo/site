@@ -15,7 +15,9 @@ import { projectIndexSchema } from "../../schemas";
 import { render } from "astro:content";
 
 export const getStaticPaths = async () => {
-  const projects = await getPublishedProjects(({ data }) => data.isIndex === true);
+  const projects = await getPublishedProjects(
+    ({ data }) => data.isIndex === true,
+  );
   return compact(
     projects.map((project) => {
       const projectId = getProjectSlugFromSlug(project.id);
@@ -48,7 +50,7 @@ const projectPosts = projectEntries.filter(({ data }) => data.isIndex !== true);
     <div class="flex min-h-screen flex-col leading-relaxed">
       <Header />
       <Three>
-        <a href="/garage" class="no-underline hover:underline pb-4">← back</a>
+        <a href="/garage" class="pb-4 no-underline hover:underline">← back</a>
         <h2 class="text-xl">Project: {indexEntyLabel}</h2>
         <div>
           {IndexContent && <IndexContent />}
@@ -57,8 +59,8 @@ const projectPosts = projectEntries.filter(({ data }) => data.isIndex !== true);
           projectPosts.length > 0 && (
             <>
               <hr class="mt-2 mb-2" />
-              <div class="grow gap-2 2xl:gap-5 flex basis-0 flex-col 2xl:flex-row-reverse pb-20 2xl:items-start">
-                <div class="bg-limed-spruce-700 border p-2 2xl:w-60 sticky top-28 sm:top-20">
+              <div class="flex grow basis-0 flex-col gap-2 pb-20 2xl:flex-row-reverse 2xl:items-start 2xl:gap-5">
+                <div class="sticky top-28 border bg-limed-spruce-700 p-2 sm:top-20 2xl:w-60">
                   {projectPosts.map((post) => (
                     <div>
                       <a
@@ -70,7 +72,7 @@ const projectPosts = projectEntries.filter(({ data }) => data.isIndex !== true);
                     </div>
                   ))}
                 </div>
-                <div class="basis-0 grow">
+                <div class="grow basis-0">
                   {projectPosts.map((post, i) => (
                     <>
                       {i > 0 && <hr class="mt-5 mb-4" />}

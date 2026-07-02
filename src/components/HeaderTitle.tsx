@@ -6,7 +6,7 @@ export interface HeaderTitleProps {
 }
 
 const HeaderTitle: FC<HeaderTitleProps> = ({ suffix }: HeaderTitleProps) => (
-  <h1 className="m-0 mb-1 mt-1 inline text-3xl font-normal leading-none text-title">
+  <h1 className="m-0 mt-1 mb-1 inline text-3xl leading-none font-normal text-title">
     <span
       style={{
         letterSpacing: "0.1em",
@@ -23,7 +23,7 @@ const HeaderTitle: FC<HeaderTitleProps> = ({ suffix }: HeaderTitleProps) => (
     >
       o
     </span>
-    <span className="font-extralight italic text-subdomain">
+    <span className="font-extralight text-subdomain italic">
       <span
         style={{
           letterSpacing: "0.04em",

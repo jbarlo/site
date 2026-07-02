@@ -20,11 +20,11 @@ const { Content: PostContent } = await render(post);
 
 <article class="post">
   <div
-    class="flex gap-x-2 flex-col sm:flex-row sm:justify-between sm:items-end pb-2"
+    class="flex flex-col gap-x-2 pb-2 sm:flex-row sm:items-end sm:justify-between"
   >
     <h3 class="text-lg" id={getPostHeadingId(post)}>
       <a
-        class="no-underline not-italic hover:underline"
+        class="not-italic no-underline hover:underline"
         href={`#${getPostHeadingId(post)}`}
       >
         {getPostTitle(post)}
