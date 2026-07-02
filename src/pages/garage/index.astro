@@ -11,7 +11,9 @@ import { projectIndexSchema } from "../../schemas";
 import type { z } from "astro/zod";
 import { compact } from "lodash-es";
 
-const projects = await getPublishedProjects(({ data }) => data.isIndex === true);
+const projects = await getPublishedProjects(
+  ({ data }) => data.isIndex === true,
+);
 // appease TS, filter against typeguard
 const projectIndices: (z.infer<typeof projectIndexSchema> & {
   id: (typeof projects)[number]["id"];
@@ -30,10 +32,10 @@ const projectIndices: (z.infer<typeof projectIndexSchema> & {
       <Header />
       <Three>
         <div class="mb-4">
-          <h2 class="text-xl pb-1 lowercase">garage</h2>
-          <section class="text-sm pb-6">
+          <h2 class="pb-1 text-xl lowercase">garage</h2>
+          <section class="pb-6 text-sm">
             <h3 class="pb-1 lowercase">what is this?</h3>
-            <p class="leading-tight pb-0.5">
+            <p class="pb-0.5 leading-tight">
               it's sort of a projects page, but messier. things found here
               aren't guaranteed to be done or really even good.
             </p>
@@ -53,7 +55,7 @@ const projectIndices: (z.infer<typeof projectIndexSchema> & {
             </p>
           </section>
           <section
-            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-3"
+            class="grid grid-cols-1 gap-3 3xl:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 2xl:grid-cols-4"
           >
             {
               projectIndices.map((project) => (

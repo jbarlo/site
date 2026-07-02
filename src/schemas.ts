@@ -21,7 +21,4 @@ export const projectIndexSchema = z.object({
   "last-updated": z.date(),
 });
 
-export const projectSchema = z.union([
-  projectIndexSchema,
-  projectEntrySchema,
-]);
+export const projectSchema = z.union([projectIndexSchema, projectEntrySchema]);
