@@ -1,7 +1,6 @@
 import type { FC, PropsWithChildren } from "react";
 
-export interface QuietProps {}
-const Quiet: FC<QuietProps> = ({ children }: PropsWithChildren<QuietProps>) => (
+const Quiet: FC<PropsWithChildren> = ({ children }) => (
   <i className="text-subtle">{children}</i>
 );
 
