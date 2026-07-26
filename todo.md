@@ -1,2 +1,0 @@
-- [ ] More consistent and clear external hyperlinking. little icon would help
-- [x] change frontmatter parser to assume local time

@@ -17,6 +17,9 @@ const isActive =
   to === "/" ? curr === "/" : curr === to || curr.startsWith(`${to}/`);
 ---
 
-<Link href={toUrl} class:list={["text-xl", isActive && "underline"]}>
+<Link
+  href={toUrl}
+  class:list={["text-xl", "underline-offset-4", isActive && "underline"]}
+>
   {title}
 </Link>
