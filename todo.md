@@ -1,3 +1,2 @@
 - [ ] More consistent and clear external hyperlinking. little icon would help
-- [ ] change frontmatter parser to assume local time
-- [ ] consistent header styles -- lowercase
+- [x] change frontmatter parser to assume local time

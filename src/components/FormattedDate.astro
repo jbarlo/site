@@ -1,0 +1,16 @@
+---
+import moment from "moment";
+
+interface Props {
+  date: Date;
+  format?: "compact" | "long";
+}
+
+const { date, format = "compact" } = Astro.props;
+// parsed tz-less timestamps are assumed to be UTC
+const m = moment.utc(date);
+---
+
+<time datetime={m.toISOString()}>
+  {m.format(format === "long" ? "MMM D, YYYY" : "YYYY-MM-DD")}
+</time>

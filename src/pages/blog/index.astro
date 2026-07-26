@@ -1,0 +1,15 @@
+---
+import Page from "../../layouts/Page.astro";
+import PostList from "../../components/PostList.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import { getPublishedPosts, sortPostsByCreatedDesc } from "../../utils";
+
+const posts = sortPostsByCreatedDesc(await getPublishedPosts());
+---
+
+<Page title="blog">
+  <div class="mb-4">
+    <SectionHeading>blog</SectionHeading>
+    <PostList posts={posts} />
+  </div>
+</Page>

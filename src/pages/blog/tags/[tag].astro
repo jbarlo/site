@@ -1,0 +1,43 @@
+---
+import Page from "../../../layouts/Page.astro";
+import Link from "../../../components/Link.astro";
+import PostList from "../../../components/PostList.astro";
+import SectionHeading from "../../../components/SectionHeading.astro";
+import {
+  getAllTags,
+  getPublishedPosts,
+  route,
+  sortPostsByCreatedDesc,
+} from "../../../utils";
+import type { CollectionEntry } from "astro:content";
+
+export const getStaticPaths = async () => {
+  const posts = await getPublishedPosts();
+  return getAllTags(posts).map((tag) => ({
+    params: { tag },
+    props: {
+      posts: sortPostsByCreatedDesc(
+        posts.filter((post) => post.data.tags.includes(tag)),
+      ),
+    },
+  }));
+};
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Page title={`tagged: ${tag}`}>
+  <div class="mb-4">
+    <SectionHeading>blog</SectionHeading>
+    <div class="flex items-baseline gap-2 pb-2">
+      <span class="text-xs text-subdomain not-italic">#{tag}</span>
+      <Link href={route("/blog")} class="text-xs">clear</Link>
+    </div>
+    <PostList posts={posts} />
+  </div>
+</Page>

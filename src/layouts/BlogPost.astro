@@ -1,19 +1,18 @@
 ---
-import moment from "moment";
+import FormattedDate from "../components/FormattedDate.astro";
 import Quiet from "../components/Quiet";
-import { getPostHeadingId, getPostTitle } from "../utils";
+import Tag from "../components/Tag.astro";
 import { render, type CollectionEntry } from "astro:content";
 
 interface Props {
-  post: CollectionEntry<"projects">;
+  post: CollectionEntry<"posts">;
 }
 
 const { post } = Astro.props;
 
-const created = moment(post.data.created).toISOString().replace("z", "");
-const lastUpdated = moment(post.data["last-updated"])
-  .toISOString()
-  .replace("z", "");
+const created = post.data.created;
+const lastUpdated = post.data["last-updated"];
+const wasUpdated = created.getTime() !== lastUpdated.getTime();
 
 const { Content: PostContent } = await render(post);
 ---
@@ -22,30 +21,31 @@ const { Content: PostContent } = await render(post);
   <div
     class="flex flex-col gap-x-2 pb-2 sm:flex-row sm:items-end sm:justify-between"
   >
-    <h3 class="text-lg" id={getPostHeadingId(post)}>
-      <a
-        class="not-italic no-underline hover:underline"
-        href={`#${getPostHeadingId(post)}`}
-      >
-        {getPostTitle(post)}
-      </a>
-    </h3>
+    <h2 class="text-xl">{post.data.title}</h2>
     <span class="sm:text-right">
       <span class="inline-block">
-        {moment(created).format("MMM D, YYYY")}
+        <FormattedDate date={created} format="long" />
       </span>
       <span class="inline-block">
         {
-          moment(created).toISOString() !==
-            moment(lastUpdated).toISOString() && (
+          wasUpdated && (
             <Quiet>
-              ({`Last updated: ${moment(lastUpdated).format("MMM D, YYYY")}`})
+              (Last updated: <FormattedDate date={lastUpdated} format="long" />)
             </Quiet>
           )
         }
       </span>
     </span>
   </div>
+  {
+    post.data.tags.length > 0 && (
+      <div class="flex gap-2 pb-3">
+        {post.data.tags.map((tag) => (
+          <Tag tag={tag} />
+        ))}
+      </div>
+    )
+  }
   <div>
     <PostContent />
   </div>

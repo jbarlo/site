@@ -1,0 +1,22 @@
+---
+import Link from "./Link.astro";
+
+interface Props {
+  currUrl: string;
+  toUrl: string;
+  title: string;
+}
+
+const { currUrl, toUrl, title } = Astro.props;
+
+const normalizeUrl = (url: string) => url.replace(/\/+$/, "") || "/";
+
+const curr = normalizeUrl(currUrl);
+const to = normalizeUrl(toUrl);
+const isActive =
+  to === "/" ? curr === "/" : curr === to || curr.startsWith(`${to}/`);
+---
+
+<Link href={toUrl} class:list={["text-xl", isActive && "underline"]}>
+  {title}
+</Link>

@@ -1,0 +1,15 @@
+---
+interface Props {
+  href: string;
+  class?: string;
+}
+
+const { href, class: className } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={["not-italic no-underline hover:underline", className]}
+>
+  <slot />
+</a>

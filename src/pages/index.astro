@@ -1,81 +1,18 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../layouts/Header.astro";
-import Three from "../layouts/Three.astro";
-import Footer from "../layouts/Footer.astro";
-import { orderBy, groupBy, compact, flatMap, map } from "lodash-es";
-import moment from "moment";
-import {
-  getProjectSlugFromSlug,
-  getPostHeadingId,
-  getPublishedProjects,
-} from "../utils";
-import { projectIndexSchema } from "../schemas";
+import Page from "../layouts/Page.astro";
+import PostList from "../components/PostList.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { getPublishedPosts, sortPostsByCreatedDesc } from "../utils";
 
-const projects = await getPublishedProjects();
-
-const projectsWithIndexLabel = compact(
-  flatMap(
-    groupBy(projects, (p) => getProjectSlugFromSlug(p.id)),
-    (group) => {
-      const index = group.find((p) => p.data.isIndex === true);
-      if (!index) return null;
-
-      const t = projectIndexSchema.safeParse(index.data);
-      if (!t.success) return null;
-
-      return map(group, (p) => ({ label: t.data.label, post: p }));
-    },
-  ),
+const recentPosts = sortPostsByCreatedDesc(await getPublishedPosts()).slice(
+  0,
+  3,
 );
-
-const orderedProjects = orderBy(
-  projectsWithIndexLabel,
-  (p) => +moment(p.post.data.created),
-  "desc",
-);
-
-// first 3 most recent posts
-const posts: {
-  title: string;
-  formattedDate: string;
-  snippet: string;
-  linkTo: string;
-}[] = orderedProjects.slice(0, 3).map((p) => {
-  return {
-    title: `[Project: ${p.label}]${
-      p.post.data.isIndex === true ? "" : ` ${p.post.data.title}`
-    }`,
-    formattedDate: moment(p.post.data.created).format("YYYY-MM-DD"),
-    snippet: p.post.body ?? "",
-    linkTo: `/garage/${getProjectSlugFromSlug(p.post.id)}${
-      p.post.data.isIndex !== true ? `#${getPostHeadingId(p.post)}` : ""
-    }`,
-  };
-});
 ---
 
-<Layout title="home | barlo">
-  <div class="bg-limed-spruce text-text">
-    <div class="flex min-h-screen flex-col leading-relaxed">
-      <Header />
-      <Three>
-        <div class="flex flex-col gap-2">
-          <h2 class="text-2xl">recent</h2>
-          {
-            posts.map((p) => (
-              <article class="pr-4 pl-4">
-                <h3 class="text-lg">
-                  <a href={p.linkTo} class="no-underline hover:underline">
-                    {p.title} — {p.formattedDate}
-                  </a>
-                </h3>
-              </article>
-            ))
-          }
-        </div>
-      </Three>
-      <Footer />
-    </div>
+<Page title="home">
+  <div class="mb-4">
+    <SectionHeading>recent</SectionHeading>
+    <PostList posts={recentPosts} />
   </div>
-</Layout>
+</Page>

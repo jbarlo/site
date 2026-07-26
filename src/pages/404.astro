@@ -1,0 +1,14 @@
+---
+import Page from "../layouts/Page.astro";
+import Link from "../components/Link.astro";
+import { route } from "../utils";
+---
+
+<Page title="404">
+  <div class="flex grow flex-col items-center justify-center pb-[10vh]">
+    <div class="text-lg">looks like nothing's here</div>
+    <div>
+      bad link? go <Link href={route("/")} class="underline">home</Link>
+    </div>
+  </div>
+</Page>

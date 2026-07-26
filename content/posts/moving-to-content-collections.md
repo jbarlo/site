@@ -1,8 +1,8 @@
 ---
-entry-num: 3
 title: Moving to Content Collections
 created: 2024-02-18
 last-updated: 2024-02-19
+tags: [site]
 ---
 
 Just a quick update. I managed to pretty easily migrate from a hand-rolled content reading system to [Astro Content Collections](https://docs.astro.build/en/guides/content-collections). My original folder structure and logic mapped almost perfectly to the new scheme so all I really needed to do was take satisfaction in deleting a few lines of regex and an extraneous config file.

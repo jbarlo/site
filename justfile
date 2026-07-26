@@ -9,8 +9,8 @@ install:
 ci:
     pnpm install --frozen-lockfile
 
-dev:
-    pnpm run dev
+dev parameters:
+    pnpm run dev {{parameters}}
 
 build:
     pnpm run build
