@@ -1,8 +1,5 @@
 ---
-import Layout from "../../../layouts/Layout.astro";
-import Header from "../../../layouts/Header.astro";
-import Three from "../../../layouts/Three.astro";
-import Footer from "../../../layouts/Footer.astro";
+import Page from "../../../layouts/Page.astro";
 import Link from "../../../components/Link.astro";
 import PostList from "../../../components/PostList.astro";
 import SectionHeading from "../../../components/SectionHeading.astro";
@@ -34,21 +31,13 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<Layout title={`tagged: ${tag} | barlo`}>
-  <div class="bg-limed-spruce text-text">
-    <div class="flex min-h-screen flex-col leading-relaxed">
-      <Header />
-      <Three>
-        <div class="mb-4">
-          <SectionHeading>blog</SectionHeading>
-          <div class="flex items-baseline gap-2 pb-2">
-            <span class="text-xs text-subdomain not-italic">#{tag}</span>
-            <Link href={route("/blog")} class="text-xs">clear</Link>
-          </div>
-          <PostList posts={posts} />
-        </div>
-      </Three>
-      <Footer />
+<Page title={`tagged: ${tag}`}>
+  <div class="mb-4">
+    <SectionHeading>blog</SectionHeading>
+    <div class="flex items-baseline gap-2 pb-2">
+      <span class="text-xs text-subdomain not-italic">#{tag}</span>
+      <Link href={route("/blog")} class="text-xs">clear</Link>
     </div>
+    <PostList posts={posts} />
   </div>
-</Layout>
+</Page>

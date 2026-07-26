@@ -1,0 +1,25 @@
+---
+import Layout from "./Layout.astro";
+import Header from "./Header.astro";
+import Three from "./Three.astro";
+import Footer from "./Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={`${title} | barlo`} description={description}>
+  <div class="bg-limed-spruce text-text">
+    <div class="flex min-h-screen flex-col leading-relaxed">
+      <Header />
+      <Three>
+        <slot />
+      </Three>
+      <Footer />
+    </div>
+  </div>
+</Layout>

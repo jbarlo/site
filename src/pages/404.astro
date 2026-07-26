@@ -1,25 +1,14 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../layouts/Header.astro";
-import Three from "../layouts/Three.astro";
-import Footer from "../layouts/Footer.astro";
+import Page from "../layouts/Page.astro";
 import Link from "../components/Link.astro";
 import { route } from "../utils";
 ---
 
-<Layout title="404 | barlo">
-  <div class="bg-limed-spruce text-text">
-    <div class="flex min-h-screen flex-col leading-relaxed">
-      <Header />
-      <Three>
-        <div class="flex grow flex-col items-center justify-center pb-[10vh]">
-          <div class="text-lg">looks like nothing's here</div>
-          <div>
-            bad link? go <Link href={route("/")} class="underline">home</Link>
-          </div>
-        </div>
-      </Three>
-      <Footer />
+<Page title="404">
+  <div class="flex grow flex-col items-center justify-center pb-[10vh]">
+    <div class="text-lg">looks like nothing's here</div>
+    <div>
+      bad link? go <Link href={route("/")} class="underline">home</Link>
     </div>
   </div>
-</Layout>
+</Page>

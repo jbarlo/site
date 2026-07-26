@@ -1,8 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../layouts/Header.astro";
-import Three from "../layouts/Three.astro";
-import Footer from "../layouts/Footer.astro";
+import Page from "../layouts/Page.astro";
 import Quiet from "../components/Quiet";
 import SectionHeading from "../components/SectionHeading.astro";
 
@@ -10,37 +7,29 @@ const blurb =
   "I'm a developer working out of Vancouver, Canada. I like to pick up and drop problems, sometimes I solve them.";
 ---
 
-<Layout title="about | barlo">
-  <div class="bg-limed-spruce text-text">
-    <div class="flex min-h-screen flex-col leading-relaxed">
-      <Header />
-      <Three>
-        <div class="mb-4">
-          <SectionHeading>james barlow</SectionHeading>
-          <div class="leading-snug">
-            {blurb}
-          </div>
-        </div>
-        <!-- <div class="mb-4">
-          <SectionHeading>work</SectionHeading>
-        </div> -->
-        <div class="mb-4">
-          <SectionHeading>topics</SectionHeading>
-          <div>
-            <span class="text-subdomain">[always]:</span>
-            systems, serendipity, process, design
-          </div>
-          <div>
-            <span class="text-subdomain">[atm]:</span>
-            linux, llms, skateboarding, espresso <Quiet>(yeah I know)</Quiet>
-          </div>
-          <div>
-            <span class="text-subdomain">[backburner]:</span>
-            analog photography, 3d printing, gamedev
-          </div>
-        </div>
-      </Three>
-      <Footer />
+<Page title="about">
+  <div class="mb-4">
+    <SectionHeading>james barlow</SectionHeading>
+    <div class="leading-snug">
+      {blurb}
     </div>
   </div>
-</Layout>
+  <!-- <div class="mb-4">
+    <SectionHeading>work</SectionHeading>
+  </div> -->
+  <div class="mb-4">
+    <SectionHeading>topics</SectionHeading>
+    <div>
+      <span class="text-subdomain">[always]:</span>
+      systems, serendipity, process, design
+    </div>
+    <div>
+      <span class="text-subdomain">[atm]:</span>
+      linux, llms, skateboarding, espresso <Quiet>(yeah I know)</Quiet>
+    </div>
+    <div>
+      <span class="text-subdomain">[backburner]:</span>
+      analog photography, 3d printing, gamedev
+    </div>
+  </div>
+</Page>
