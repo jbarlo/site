@@ -27,3 +27,39 @@
 
   --breakpoint-3xl: 1600px;
 }
+
+@utility link-internal {
+  font-style: normal;
+  text-decoration: none;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  &:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+}
+
+@utility link-external {
+  font-style: italic;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  &:hover {
+    color: #fff;
+  }
+  /* only add external icon link for non-icon links */
+  &:not(:has(svg))::after {
+    content: "";
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    margin-left: 0.15em;
+    background-color: currentColor;
+    -webkit-mask-image: url("lucide-static/icons/external-link.svg");
+    mask-image: url("lucide-static/icons/external-link.svg");
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+}
