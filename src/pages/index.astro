@@ -4,6 +4,7 @@ import Header from "../layouts/Header.astro";
 import Three from "../layouts/Three.astro";
 import Footer from "../layouts/Footer.astro";
 import PostList from "../components/PostList.astro";
+import SectionHeading from "../components/SectionHeading.astro";
 import { getPublishedPosts, sortPostsByCreatedDesc } from "../utils";
 
 const recentPosts = sortPostsByCreatedDesc(await getPublishedPosts()).slice(
@@ -18,7 +19,7 @@ const recentPosts = sortPostsByCreatedDesc(await getPublishedPosts()).slice(
       <Header />
       <Three>
         <div class="mb-4">
-          <h2 class="pb-1 text-xl lowercase">recent</h2>
+          <SectionHeading>recent</SectionHeading>
           <PostList posts={recentPosts} />
         </div>
       </Three>

@@ -5,6 +5,7 @@ import Three from "../../../layouts/Three.astro";
 import Footer from "../../../layouts/Footer.astro";
 import Link from "../../../components/Link.astro";
 import PostList from "../../../components/PostList.astro";
+import SectionHeading from "../../../components/SectionHeading.astro";
 import {
   getAllTags,
   getPublishedPosts,
@@ -39,7 +40,7 @@ const { posts } = Astro.props;
       <Header />
       <Three>
         <div class="mb-4">
-          <h2 class="pb-1 text-xl lowercase">blog</h2>
+          <SectionHeading>blog</SectionHeading>
           <div class="flex items-baseline gap-2 pb-2">
             <span class="text-xs text-subdomain not-italic">#{tag}</span>
             <Link href={route("/blog")} class="text-xs">clear</Link>

@@ -4,6 +4,7 @@ import Header from "../layouts/Header.astro";
 import Three from "../layouts/Three.astro";
 import Footer from "../layouts/Footer.astro";
 import Quiet from "../components/Quiet";
+import SectionHeading from "../components/SectionHeading.astro";
 
 const blurb =
   "I'm a developer working out of Vancouver, Canada. I like to pick up and drop problems, sometimes I solve them.";
@@ -15,16 +16,16 @@ const blurb =
       <Header />
       <Three>
         <div class="mb-4">
-          <h2 class="pb-1 text-xl lowercase">james barlow</h2>
+          <SectionHeading>james barlow</SectionHeading>
           <div class="leading-snug">
             {blurb}
           </div>
         </div>
         <!-- <div class="mb-4">
-          <h2 class="pb-1 text-xl lowercase">work</h2>
+          <SectionHeading>work</SectionHeading>
         </div> -->
         <div class="mb-4">
-          <h2 class="pb-1 text-xl lowercase">topics</h2>
+          <SectionHeading>topics</SectionHeading>
           <div>
             <span class="text-subdomain">[always]:</span>
             systems, serendipity, process, design
