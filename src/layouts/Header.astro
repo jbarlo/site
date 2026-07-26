@@ -17,7 +17,7 @@ const isBlog =
   pathname === route("/blog") || pathname.startsWith(`${route("/blog")}/`);
 ---
 
-<nav class="sticky top-0 bg-limed-spruce">
+<nav class="top-0 z-10 bg-limed-spruce [@media(min-height:32rem)]:sticky">
   <Three>
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
       <HeaderTitle suffix={isBlog ? "g" : undefined} />
