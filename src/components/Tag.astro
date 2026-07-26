@@ -1,0 +1,14 @@
+---
+import Link from "./Link.astro";
+import { route } from "../utils";
+
+interface Props {
+  tag: string;
+}
+
+const { tag } = Astro.props;
+---
+
+<Link href={`${route("/blog")}/tags/${tag}`} class="text-xs text-subdomain">
+  #{tag}
+</Link>

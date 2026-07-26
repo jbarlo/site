@@ -1,24 +1,15 @@
 import { z } from "astro/zod";
 
-export const projectEntrySchema = z.object({
-  publish: z.boolean().default(true),
-  isIndex: z.literal(false).optional(),
-  "entry-num": z.number(),
-  title: z.string(),
-  created: z.date(),
-  "last-updated": z.date(),
-});
-
-export const projectIndexSchema = z.object({
-  publish: z.boolean().default(true),
-  isIndex: z.literal(true),
-  label: z.string(),
-  description: z.string().optional(),
-  imgUrl: z.string(),
-  imgAlt: z.string(),
-  github: z.string().optional(),
-  created: z.date(),
-  "last-updated": z.date(),
-});
-
-export const projectSchema = z.union([projectIndexSchema, projectEntrySchema]);
+export const postSchema = z
+  .object({
+    publish: z.boolean().default(true),
+    title: z.string(),
+    created: z.date(),
+    "last-updated": z.date().optional(),
+    tags: z.array(z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/)).default([]),
+    slug: z.string().optional(),
+  })
+  .transform((obj) => ({
+    "last-updated": obj.created,
+    ...obj,
+  }));

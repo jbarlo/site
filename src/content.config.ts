@@ -1,12 +1,12 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { projectSchema } from "./schemas";
+import { postSchema } from "./schemas";
 
-const projectCollection = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
-  schema: projectSchema,
+const postCollection = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./content/posts" }),
+  schema: postSchema,
 });
 
 export const collections = {
-  projects: projectCollection,
+  posts: postCollection,
 };

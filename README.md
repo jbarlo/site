@@ -1,25 +1,21 @@
 # Site
 
-Built on Node v20 with [Astro](https://astro.build/).
+Built on Node v26 with [Astro](https://astro.build/).
 
 ## Setup
 
 To run locally, install with:
 
 ```sh
-npm i
+just install
 ```
 
 then start the dev server with:
 
 ```sh
-npm run dev
+just dev
 ```
 
 ## Deployment
 
-Run the following to statically generate the site, then push and forget it!
-
-```sh
-npm run build
-```
+Pushing to main triggers the [static build workflow](.github/workflows/static.yml).

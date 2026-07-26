@@ -1,0 +1,15 @@
+---
+import moment from "moment";
+
+interface Props {
+  date: Date;
+  format?: "compact" | "long";
+}
+
+const { date, format = "compact" } = Astro.props;
+const m = moment(date);
+---
+
+<time datetime={m.toISOString()}>
+  {m.format(format === "long" ? "MMM D, YYYY" : "YYYY-MM-DD")}
+</time>

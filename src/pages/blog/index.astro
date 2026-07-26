@@ -1,0 +1,25 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../layouts/Header.astro";
+import Three from "../../layouts/Three.astro";
+import Footer from "../../layouts/Footer.astro";
+import PostList from "../../components/PostList.astro";
+import { getPublishedPosts, sortPostsByCreatedDesc } from "../../utils";
+
+const posts = sortPostsByCreatedDesc(await getPublishedPosts());
+---
+
+<Layout title="blog | barlo">
+  <div class="bg-limed-spruce text-text">
+    <div class="flex min-h-screen flex-col leading-relaxed">
+      <Header />
+      <Three>
+        <div class="mb-4">
+          <h2 class="pb-1 text-xl lowercase">blog</h2>
+          <PostList posts={posts} />
+        </div>
+      </Three>
+      <Footer />
+    </div>
+  </div>
+</Layout>

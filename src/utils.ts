@@ -1,25 +1,15 @@
 import { getCollection, type CollectionEntry } from "astro:content";
-import { isNil } from "lodash-es";
+import { flatMap, orderBy, uniq } from "lodash-es";
+import moment from "moment";
 
-export const getPublishedProjects = (
-  predicate?: Parameters<typeof getCollection<"projects">>[1],
-) =>
-  getCollection(
-    "projects",
-    (post) => post.data.publish && (isNil(predicate) || predicate(post)),
-  );
+export type StaticRoute = "/" | "/about" | "/blog";
+export const route = (to: StaticRoute) => to;
 
-export const getPostHeadingId = (post: CollectionEntry<"projects">) =>
-  post.data.isIndex
-    ? ""
-    : `${post.data["entry-num"]}-${post.data.title
-        .toLowerCase()
-        .replace(/ /g, "-")}`;
+export const getPublishedPosts = () =>
+  getCollection("posts", (post) => post.data.publish);
 
-export const getPostTitle = (post: CollectionEntry<"projects">) =>
-  post.data.isIndex
-    ? post.data.label
-    : `${post.data["entry-num"]}. ${post.data.title}`;
+export const sortPostsByCreatedDesc = (posts: CollectionEntry<"posts">[]) =>
+  orderBy(posts, [(post) => +moment(post.data.created), "id"], ["desc", "asc"]);
 
-export const getProjectSlugFromSlug = (slug: string): string | undefined =>
-  slug.split("/")[0];
+export const getAllTags = (posts: CollectionEntry<"posts">[]) =>
+  uniq(flatMap(posts, (post) => post.data.tags)).sort();
