@@ -33,6 +33,9 @@
   text-decoration: none;
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
+  transition:
+    color 150ms ease,
+    text-decoration-color 150ms ease;
   &:hover {
     color: #fff;
     text-decoration: underline;
@@ -44,6 +47,9 @@
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
+  transition:
+    color 150ms ease,
+    text-decoration-color 150ms ease;
   &:hover {
     color: #fff;
   }
