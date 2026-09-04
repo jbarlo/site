@@ -21,6 +21,6 @@ const { post } = Astro.props;
 ---
 
 <Page title={post.data.title}>
-  <Link href={route("/blog")} class="pb-4">← back</Link>
+  <Link href={route("/blog")} class="self-start pb-4">← back</Link>
   <BlogPost post={post} />
 </Page>

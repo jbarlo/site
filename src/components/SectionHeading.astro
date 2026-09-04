@@ -1,9 +1,59 @@
 ---
 interface Props {
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  id?: string;
 }
 
-const { as: Tag = "h2" } = Astro.props;
+const { as: Tag = "h2", id } = Astro.props;
+
+const text = (await Astro.slots.render("default"))
+  .replace(/<[^>]+>/g, "")
+  .trim();
+const headingId =
+  id ??
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 ---
 
-<Tag class="pb-1 text-xl lowercase"><slot /></Tag>
+<Tag id={headingId} class="relative scroll-mt-24 pb-1 text-xl lowercase">
+  <a href={`#${headingId}`} class="heading-link">
+    <span
+      class="hash mr-[0.5em] text-subdomain sm:absolute sm:right-full"
+      aria-hidden="true">#</span
+    >{text}
+  </a>
+</Tag>
+
+<style>
+  /* headings deliberately skip the link tokens: the text stays put and
+     only the hash reacts, going white-hot under the pointer */
+  .heading-link {
+    font-style: normal;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+  .heading-link:hover,
+  .heading-link:focus-visible {
+    color: #fff4e4;
+  }
+  .hash {
+    text-shadow: 0 0 0.5em transparent;
+    transition:
+      color 150ms ease,
+      text-shadow 150ms ease;
+  }
+  .heading-link:hover .hash,
+  .heading-link:focus-visible .hash {
+    color: #fff4e4;
+    text-shadow: 0 0 0.5em
+      color-mix(in srgb, var(--color-subdomain) 60%, transparent);
+  }
+  .heading-link:focus-visible {
+    outline: 2px solid
+      color-mix(in srgb, var(--color-subdomain) 50%, transparent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+</style>

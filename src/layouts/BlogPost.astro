@@ -21,7 +21,7 @@ const { Content: PostContent } = await render(post);
   <div
     class="flex flex-col gap-x-2 pb-2 sm:flex-row sm:items-end sm:justify-between"
   >
-    <h2 class="text-xl">{post.data.title}</h2>
+    <h2 class="text-xl text-balance">{post.data.title}</h2>
     <span class="sm:text-right">
       <span class="inline-block">
         <FormattedDate date={created} format="long" />

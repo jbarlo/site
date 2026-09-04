@@ -10,5 +10,5 @@ const { tag } = Astro.props;
 ---
 
 <Link href={`${route("/blog")}/tags/${tag}`} class="text-xs text-subdomain">
-  #{tag}
+  {tag}
 </Link>

@@ -2,7 +2,7 @@
 
 @theme {
   --color-title: #edf2f4;
-  --color-subdomain: #ffc53a;
+  --color-subdomain: #ff9e33; /* trial: full streetlamp (h30). neighbors: #ffae3d (h34) / #ffb843 (h38). original #ffc53a (h43) */
   --color-footer: #16191c;
   --color-text: #cddbe1;
   --color-subtle: #9eb9c4;
@@ -19,7 +19,7 @@
   --color-limed-spruce-800: #3b454f;
   --color-limed-spruce-900: #373f47;
   --color-limed-spruce-950: #20262c;
-  --color-limed-spruce: #373f47;
+  --color-limed-spruce: #1a222d; /* trial: l14 h215. neighbors: #1a1f2d (h224) / #1a1d2d (h232). original #373f47 */
 
   --flex-grow-2: 2;
   --flex-grow-3: 3;
@@ -28,17 +28,75 @@
   --breakpoint-3xl: 1600px;
 }
 
+/* streetlamp lighting model: warmth marks what's near. hover warms toward
+   amber-white, selection and focus sit directly under the lamp, and the
+   page furniture (scrollbar, bullets, touch flashes) carries a warm cast */
+::selection {
+  background-color: var(--color-subdomain);
+  color: var(--color-limed-spruce);
+}
+
+html {
+  scrollbar-color: color-mix(
+      in srgb,
+      var(--color-subdomain) 20%,
+      var(--color-limed-spruce-600)
+    )
+    transparent;
+  -webkit-tap-highlight-color: color-mix(
+    in srgb,
+    var(--color-subdomain) 30%,
+    transparent
+  );
+}
+
+::marker {
+  color: var(--color-subdomain);
+}
+
 @utility link-internal {
   font-style: normal;
   text-decoration: none;
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
+  text-shadow: 0 0 0.5em transparent;
+  position: relative;
   transition:
     color 150ms ease,
-    text-decoration-color 150ms ease;
-  &:hover {
-    color: #fff;
+    text-decoration-color 150ms ease,
+    text-shadow 150ms ease;
+  /* the light pool: a radial falloff that reaches past the text and
+     tapers continuously from the center -- no plateau, no edge */
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -0.5em -0.75em;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-subdomain) 30%, transparent),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 150ms ease;
+  }
+  &:hover::before,
+  &:focus-visible::before {
+    opacity: 1;
+  }
+  &:hover,
+  &:focus-visible {
+    color: #fff4e4;
     text-decoration: underline;
+    text-shadow: 0 0 0.5em
+      color-mix(in srgb, var(--color-subdomain) 40%, transparent);
+  }
+  &:focus-visible {
+    /* the crisp offset ring is focus-only; the glow is shared with hover */
+    outline: 2px solid
+      color-mix(in srgb, var(--color-subdomain) 50%, transparent);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
 
@@ -47,11 +105,43 @@
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
+  text-shadow: 0 0 0.5em transparent;
+  position: relative;
   transition:
     color 150ms ease,
-    text-decoration-color 150ms ease;
-  &:hover {
-    color: #fff;
+    text-decoration-color 150ms ease,
+    text-shadow 150ms ease;
+  /* the light pool: a radial falloff that reaches past the text and
+     tapers continuously from the center -- no plateau, no edge */
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -0.5em -0.75em;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in srgb, var(--color-subdomain) 30%, transparent),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 150ms ease;
+  }
+  &:hover::before,
+  &:focus-visible::before {
+    opacity: 1;
+  }
+  &:hover,
+  &:focus-visible {
+    color: #fff4e4;
+    text-shadow: 0 0 0.5em
+      color-mix(in srgb, var(--color-subdomain) 40%, transparent);
+  }
+  &:focus-visible {
+    /* the crisp offset ring is focus-only; the glow is shared with hover */
+    outline: 2px solid
+      color-mix(in srgb, var(--color-subdomain) 50%, transparent);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
   /* only add external icon link for non-icon links */
   &:not(:has(svg))::after {
