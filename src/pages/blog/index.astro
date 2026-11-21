@@ -8,8 +8,6 @@ const posts = sortPostsByCreatedDesc(await getPublishedPosts());
 ---
 
 <Page title="blog">
-  <div class="mb-4">
-    <SectionHeading>blog</SectionHeading>
-    <PostList posts={posts} />
-  </div>
+  <SectionHeading>blog</SectionHeading>
+  <PostList posts={posts} variant="roll" />
 </Page>

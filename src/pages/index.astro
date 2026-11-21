@@ -11,8 +11,6 @@ const recentPosts = sortPostsByCreatedDesc(await getPublishedPosts()).slice(
 ---
 
 <Page title="home">
-  <div class="mb-4">
-    <SectionHeading>recent</SectionHeading>
-    <PostList posts={recentPosts} />
-  </div>
+  <SectionHeading>recent</SectionHeading>
+  <PostList posts={recentPosts} />
 </Page>

@@ -1,28 +1,29 @@
 ---
 import Layout from "./Layout.astro";
 import Header from "./Header.astro";
-import Three from "./Three.astro";
 import Footer from "./Footer.astro";
-import Fireflies from "../components/Fireflies.astro";
 
 interface Props {
   title: string;
   description?: string;
-  fireflies?: boolean;
 }
 
-const { title, description, fireflies = true } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <Layout title={`${title} | barlo`} description={description}>
   <div class="bg-limed-spruce text-text">
     <div class="flex min-h-screen flex-col leading-relaxed">
       <Header />
-      <Three>
+      <main class="page-grid grow" data-rhythm>
         <slot />
-      </Three>
-      {fireflies && <Fireflies />}
+      </main>
       <Footer />
     </div>
   </div>
 </Layout>
+
+<script>
+  import { startRhythm } from "./rhythm";
+  startRhythm();
+</script>

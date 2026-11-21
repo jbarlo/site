@@ -20,7 +20,9 @@ interface Props {
 const { post } = Astro.props;
 ---
 
-<Page title={post.data.title} fireflies={false}>
-  <Link href={route("/blog")} class="self-start pb-4">← back</Link>
+<Page title={post.data.title}>
+  <div class="snap mb-(--line)">
+    <Link href={route("/blog")}>← back</Link>
+  </div>
   <BlogPost post={post} />
 </Page>

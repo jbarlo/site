@@ -1,26 +1,17 @@
 ---
-import { controlNames, controls, readControl } from "./fireflies/controls";
+import { controlNames, readControl } from "./fireflies/controls";
 ---
 
 <div class="fireflies">
   <canvas
-    aria-label="Fireflies glowing in the dark, drifting away from the cursor"
+    aria-label="Fireflies drifting away from the cursor"
   ></canvas>
   <p class="fireflies-settings">
     {
       controlNames.map((name) => (
         <span>
           {name}
-          <span
-            class="control"
-            data-control={name}
-            role="slider"
-            tabindex="0"
-            aria-label={name}
-            aria-valuemin={controls[name].min}
-            aria-valuemax={controls[name].max}
-            aria-valuenow={readControl(name)}
-          >
+          <span class="scrub" data-control={name} aria-label={name}>
             {readControl(name)}
           </span>
         </span>
@@ -30,10 +21,17 @@ import { controlNames, controls, readControl } from "./fireflies/controls";
 </div>
 
 <style>
+  .fireflies {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+  }
   .fireflies canvas {
     display: block;
+    flex: 1 1 0; /* size from the space, never from the pixel buffer */
     width: 100%;
-    height: clamp(208px, 28.6vw, 338px);
+    min-height: 208px;
   }
   .fireflies-settings {
     display: flex;
@@ -45,31 +43,8 @@ import { controlNames, controls, readControl } from "./fireflies/controls";
     font-size: 0.65rem;
     color: color-mix(in srgb, var(--color-subtle) 70%, transparent);
   }
-  .control {
+  .scrub {
     margin-left: 0.5ch;
-    color: var(--color-text);
-    font-variant-numeric: tabular-nums;
-    border-bottom: 1px dotted
-      color-mix(in srgb, var(--color-subtle) 40%, transparent);
-    cursor: ew-resize;
-    user-select: none;
-    touch-action: none; /* horizontal drag on touch */
-    outline: none;
-    transition:
-      color 150ms ease,
-      border-color 150ms ease;
-  }
-  .control:hover,
-  .control:focus-visible,
-  .control:active,
-  .control[contenteditable="true"] {
-    color: var(--color-subdomain);
-    border-bottom-color: var(--color-subdomain);
-  }
-  .control[contenteditable="true"] {
-    cursor: text;
-    user-select: text;
-    border-bottom-style: solid;
   }
 </style>
 
@@ -82,92 +57,20 @@ import { controlNames, controls, readControl } from "./fireflies/controls";
     writeControl,
     type ControlName,
   } from "./fireflies/controls";
-
-  const PX_PER_STEP = 6; // drag distance per step
+  import { scrubbable } from "./scrub";
 
   for (const root of document.querySelectorAll<HTMLElement>(".fireflies")) {
     const swarm = mount(root.querySelector("canvas")!, fireflies);
-    const controlEls = [
-      ...root.querySelectorAll<HTMLElement>("[data-control]"),
-    ];
-    const nameOf = (el: HTMLElement) => el.dataset.control as ControlName;
-
-    const show = () => {
-      for (const el of controlEls) {
-        const value = String(readControl(nameOf(el)));
-        if (!el.isContentEditable) el.textContent = value;
-        el.setAttribute("aria-valuenow", value);
-      }
-    };
-    const set = (name: ControlName, value: number) => {
-      writeControl(name, value);
-      swarm.refresh();
-      show();
-    };
-    show();
-
-    for (const el of controlEls) {
-      const name = nameOf(el);
-      const { step, min, max } = controls[name];
-
-      // drag
-      el.addEventListener("pointerdown", (e) => {
-        if (el.isContentEditable) return;
-        const [startX, start] = [e.clientX, readControl(name)];
-        const move = (e: PointerEvent) =>
-          set(
-            name,
-            start + Math.round((e.clientX - startX) / PX_PER_STEP) * step,
-          );
-        el.setPointerCapture(e.pointerId);
-        el.addEventListener("pointermove", move);
-        el.addEventListener(
-          "lostpointercapture",
-          () => el.removeEventListener("pointermove", move),
-          { once: true },
-        );
-      });
-
-      // keys. enter: type a value
-      el.addEventListener("keydown", (e) => {
-        if (el.isContentEditable) {
-          if (e.key === "Escape") el.textContent = String(readControl(name));
-          if (e.key !== "Enter" && e.key !== "Escape") return;
-          e.preventDefault();
-          el.blur(); // commits
-          return;
-        }
-        const keys: Record<string, number> = {
-          ArrowRight: readControl(name) + step,
-          ArrowUp: readControl(name) + step,
-          ArrowLeft: readControl(name) - step,
-          ArrowDown: readControl(name) - step,
-          PageUp: readControl(name) + step * 10,
-          PageDown: readControl(name) - step * 10,
-          Home: min,
-          End: max,
-        };
-        if (e.key === "Enter") edit(el);
-        else if (e.key in keys) set(name, keys[e.key]);
-        else return;
-        e.preventDefault();
-      });
-
-      // double-click: type a value
-      el.addEventListener("dblclick", () => edit(el));
-      el.addEventListener("blur", () => {
-        if (!el.isContentEditable) return;
-        el.contentEditable = "false";
-        const typed = parseFloat(el.textContent ?? "");
-        if (Number.isFinite(typed)) set(name, typed);
-        else show();
+    for (const el of root.querySelectorAll<HTMLElement>("[data-control]")) {
+      const name = el.dataset.control as ControlName;
+      scrubbable(el, {
+        ...controls[name],
+        get: () => readControl(name),
+        set: (value) => {
+          writeControl(name, value);
+          swarm.refresh();
+        },
       });
     }
-  }
-
-  function edit(el: HTMLElement) {
-    el.contentEditable = "true";
-    el.focus();
-    getSelection()?.selectAllChildren(el);
   }
 </script>

@@ -1,12 +1,14 @@
 ---
 import Page from "../layouts/Page.astro";
 import Link from "../components/Link.astro";
+import SectionHeading from "../components/SectionHeading.astro";
 import { route } from "../utils";
 ---
 
 <Page title="404">
-  <div class="flex grow flex-col items-center justify-center pb-[10vh]">
-    <div class="text-lg">looks like nothing's here</div>
+  <SectionHeading>404</SectionHeading>
+  <div class="body-text">
+    <div>looks like nothing's here</div>
     <div>
       bad link? go <Link href={route("/")} class="underline">home</Link>
     </div>

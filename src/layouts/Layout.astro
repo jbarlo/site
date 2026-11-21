@@ -12,6 +12,7 @@ import "@fontsource/barlow-semi-condensed/200-italic.css";
 import "@fontsource/barlow-semi-condensed/400-italic.css";
 import "@fontsource/iosevka-etoile";
 import "../styles/global.css";
+import BodyFont from "./BodyFont.astro";
 
 interface Props {
   title: string;
@@ -30,6 +31,7 @@ const { title, description } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <BodyFont />
   </head>
   <body>
     <slot />
@@ -45,22 +47,17 @@ const { title, description } = Astro.props;
       sans-serif;
   }
   @layer base {
+    /* a faint tint, inline so it can't grow the line */
     code {
+      display: inline;
+      padding: 0.15em 0.35em;
       font-family: "Iosevka Etoile", monospace;
-      font-size: 0.8em;
-      @apply rounded;
-      /* code recedes into the night: a well cut below the page surface
-         rather than a chip floating above it */
-      background-color: color-mix(
-        in srgb,
-        black 30%,
-        var(--color-limed-spruce)
-      );
-      @apply pl-1;
-      @apply pr-1;
-      @apply pt-1;
-      @apply pb-0.5;
-      display: inline-block;
+      font-size: 0.85em;
+      line-height: 1;
+      border-radius: 3px;
+      background: color-mix(in srgb, var(--color-text) 7%, transparent);
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
     }
   }
 </style>

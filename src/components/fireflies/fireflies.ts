@@ -8,7 +8,7 @@ import {
 import type { Description } from "./sim";
 
 export const fireflies: Description = {
-  count: 150,
+  count: 400,
   pixel: 2,
   color: "--color-subdomain",
 

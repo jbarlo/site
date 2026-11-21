@@ -1,0 +1,47 @@
+---
+// frozen dusk palette and fonts, independent of the site's current styles
+import "@fontsource/barlow-semi-condensed/400.css";
+import "@fontsource/iosevka-etoile";
+import Layout from "../layouts/Layout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Fireflies from "../components/Fireflies.astro";
+---
+
+<Layout title="fireflies | barlo">
+  <div class="dusk">
+    <header>
+      <SectionHeading as="h1">fireflies</SectionHeading>
+    </header>
+    <Fireflies />
+  </div>
+</Layout>
+
+<style is:global>
+  :root {
+    font-size: 20px;
+    --color-title: #edf2f4;
+    --color-subdomain: #ff9e33;
+    --color-footer: #16191c;
+    --color-text: #cddbe1;
+    --color-subtle: #9eb9c4;
+    --color-limed-spruce: #1a222d;
+    background: #1a222d;
+  }
+</style>
+
+<style>
+  .dusk {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    background: #1a222d;
+    color: #cddbe1;
+    font-family: "Barlow Semi Condensed", sans-serif;
+  }
+  header {
+    width: 100%;
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 0.5rem;
+  }
+</style>

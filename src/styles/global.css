@@ -119,3 +119,443 @@ html {
     mask-repeat: no-repeat;
   }
 }
+
+/* a number you can drag, step, or type into */
+.scrub {
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  border-bottom: 1px dotted
+    color-mix(in srgb, var(--color-subtle) 40%, transparent);
+  cursor: ew-resize;
+  user-select: none;
+  touch-action: none; /* horizontal drag on touch */
+  outline: none;
+  transition:
+    color 150ms ease,
+    border-color 150ms ease;
+  &:hover,
+  &:focus-visible,
+  &:active,
+  &[contenteditable="true"] {
+    color: var(--color-subdomain);
+    border-bottom-color: var(--color-subdomain);
+  }
+  &[contenteditable="true"] {
+    cursor: text;
+    user-select: text;
+    border-bottom-style: solid;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   the type system. body text in Literata on a strict vertical rhythm: every
+   block's top and height land on whole lines (--line, whole pixels). one
+   page grid, shared by header, content and footer, puts the text column on
+   the wordmark's axis; a margin column left of it carries metadata when the
+   viewport has room (--hang: 1), and folds into the text column when not.
+   rhythm.ts fits titles, hangs quote marks and snaps baselines to the grid
+   ------------------------------------------------------------------------ */
+
+:root {
+  --size: 18px;
+  --leading: 1.667;
+  --weight: 330;
+  --line: calc(var(--size) * var(--leading));
+  --line: round(calc(var(--size) * var(--leading)), 1px);
+  --gutter: calc(var(--size) * 1.75); /* px: the same at every font size */
+  --measure: 80ch; /* of the page font: resolved where the grid is used */
+  --margin-col: 9rem;
+  --pad: 1.25rem;
+  --lead-in: 0px; /* room left of the axis for hanging hashes */
+  --hang: 0;
+  --glow: color-mix(in srgb, var(--color-subdomain) 55%, transparent);
+  --page-columns: [full-start] var(--pad) [margin-start] 0 [margin-end]
+    var(--lead-in) [axis text-start] minmax(0, var(--measure)) [text-end]
+    minmax(0, 1fr) var(--pad) [full-end];
+
+  /* code tokens take the page's palette (see codeTheme.ts) */
+  --code-foreground: var(--color-text);
+  --code-background: color-mix(in srgb, var(--color-text) 7%, transparent);
+  --code-token-keyword: var(--color-subdomain);
+  --code-token-function: var(--color-title);
+  --code-token-constant: color-mix(
+    in srgb,
+    var(--color-subdomain) 55%,
+    var(--color-text)
+  );
+  --code-token-string: color-mix(in srgb, var(--color-title) 85%, #ffe3b0);
+  --code-token-string-expression: var(--code-token-string);
+  --code-token-comment: color-mix(
+    in srgb,
+    var(--color-subtle) 75%,
+    transparent
+  );
+  --code-token-parameter: var(--color-text);
+  --code-token-punctuation: var(--color-subtle);
+  --code-token-link: var(--color-subdomain);
+}
+@media (width >= 40rem) {
+  :root {
+    --lead-in: var(--pad);
+  }
+}
+/* wide enough for the margin: it hangs left of the axis, a line's gap away */
+@media (width >= 80rem) {
+  :root {
+    --hang: 1;
+    --page-columns: [full-start] var(--pad) minmax(0, 1fr) [margin-start]
+      var(--margin-col) [margin-end] var(--line) [axis text-start]
+      minmax(0, var(--measure)) [text-end] minmax(0, 3fr) var(--pad) [full-end];
+  }
+}
+
+/* the page grid. full-width bands re-declare it, so their lines match */
+.page-grid {
+  display: grid;
+  grid-template-columns: var(--page-columns);
+}
+:where(.page-grid > *, .prose > *) {
+  grid-column: text;
+}
+.page-grid > :is(.page-grid, .full) {
+  grid-column: full;
+}
+/* prose's blocks sit straight on its parent's grid, so they can hang */
+.prose {
+  display: contents;
+}
+
+/* the rhythm root: rows are counted from its top */
+[data-rhythm] {
+  align-content: start;
+  padding-block: var(--line) calc(var(--line) * 2);
+  line-height: var(--line);
+}
+[data-rhythm].show-grid {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 calc(var(--line) - 1px),
+    color-mix(in srgb, var(--color-subdomain) 25%, transparent)
+      calc(var(--line) - 1px) var(--line)
+  );
+}
+html {
+  /* jumping to a heading lands below the sticky header, a line to spare.
+     --header-height is measured by rhythm.ts */
+  scroll-padding-top: calc(var(--header-height, 0px) + var(--line));
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:has([data-rhythm]) {
+    scroll-behavior: smooth;
+  }
+}
+
+/* nudged onto the baseline grid by rhythm.ts */
+.snap {
+  position: relative;
+}
+
+/* body text */
+.body-text,
+.prose :is(p, li) {
+  font-family: var(--font-body);
+  font-size: var(--size);
+  font-weight: var(--weight);
+  line-height: var(--line);
+}
+.prose :is(p, ul, ol, blockquote, pre, figure) {
+  margin-bottom: var(--line);
+}
+
+/* lists and quotes: indented by one gutter; markers start on its line */
+.prose :is(ul, ol, blockquote) {
+  padding-left: var(--gutter);
+}
+.prose :is(ul, ol, blockquote) > *,
+.prose li > :is(ul, ol) {
+  margin-bottom: 0;
+}
+/* markers are drawn rather than ::marker, which right-aligns them: bullets
+   and numbers both start on the same gutter line */
+.prose :is(ul, ol) {
+  list-style: none;
+}
+.prose :is(ul, ol) > li {
+  position: relative;
+}
+.prose :is(ul, ol) > li::before {
+  position: absolute;
+  left: calc(-1 * var(--gutter));
+  color: var(--color-subtle);
+  font-variant-numeric: tabular-nums;
+}
+/* centred over where a number's digit sits, so bullets and numbers share a
+   visual column, not just a left edge. 1ch: one tabular figure */
+.prose ul > li::before {
+  content: "•";
+  width: 1ch;
+  text-align: center;
+}
+.prose ol {
+  counter-reset: item;
+}
+.prose ol > li {
+  counter-increment: item;
+}
+.prose ol > li::before {
+  content: counter(item) ".";
+}
+.prose blockquote {
+  position: relative;
+  font-style: italic;
+}
+.prose blockquote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  inset-block: 0.35em;
+  width: 2px;
+  background: color-mix(in srgb, var(--color-subtle) 40%, transparent);
+}
+
+/* code blocks: the inline code tint, as a block, on the grid */
+.prose pre {
+  padding: calc(var(--line) / 2) 1.5ch;
+  overflow-x: auto;
+  border-radius: 4px;
+  background: var(--code-background);
+  font-family: "Iosevka Etoile", monospace;
+  font-size: calc(var(--size) * 0.85);
+  line-height: var(--line);
+}
+.prose pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* prose links shine: through the lamp's orange to warm white, and glow.
+   driven by transitions on two registered numbers rather than a keyframe
+   animation, because a transition can't start from an animated value: the
+   way out has to be a transition. --shine runs the path in (orange at 0.35,
+   white at 1); --lit switches it on at once and fades it out */
+@property --shine {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --lit {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+.prose a:not(.anchor) {
+  --rest: var(--color-subtle);
+  --path: color-mix(
+    in srgb,
+    color-mix(
+      in srgb,
+      var(--rest),
+      var(--color-subdomain) clamp(0%, calc(var(--shine) / 0.35 * 100%), 100%)
+    ),
+    #fff4e4 clamp(0%, calc((var(--shine) - 0.35) / 0.65 * 100%), 100%)
+  );
+  color: color-mix(in srgb, var(--rest), var(--path) calc(var(--lit) * 100%));
+  text-decoration-color: currentColor;
+  text-shadow: 0 0 0.6em
+    color-mix(
+      in srgb,
+      var(--color-subdomain) calc(var(--lit) * var(--shine) * 55%),
+      transparent
+    );
+  /* leaving: fade out, then reset the path once it's dark */
+  transition:
+    --lit 150ms ease,
+    --shine 0s linear 150ms;
+}
+.prose a:not(.anchor):is(:hover, :focus-visible) {
+  --lit: 1;
+  --shine: 1;
+  transition: --shine 450ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .prose a:not(.anchor),
+  .prose a:not(.anchor):is(:hover, :focus-visible) {
+    transition: none;
+  }
+}
+
+/* titles: --fit is set per title by rhythm.ts, shrinking long ones */
+.title {
+  position: relative;
+  font-size: var(--fit, 42px);
+  font-weight: 600;
+  text-wrap: balance;
+  /* whole lines, however big */
+  line-height: calc(var(--line) * 2);
+  line-height: round(up, calc(var(--fit, 42px) * 1.1), var(--line));
+}
+.meta {
+  position: relative;
+  margin-bottom: var(--line);
+  line-height: var(--line);
+  color: var(--color-subtle);
+  font-style: italic;
+  font-variant-numeric: tabular-nums;
+}
+.meta:has(+ .meta) {
+  margin-bottom: 0;
+}
+
+/* section labels and subheads */
+.label {
+  position: relative;
+  padding-bottom: 0.25rem;
+  font-size: 1.25rem;
+  text-transform: lowercase;
+}
+[data-rhythm] .label {
+  padding-bottom: 0;
+  margin-bottom: var(--line);
+  line-height: var(--line);
+}
+[data-rhythm] .label:not(:first-child) {
+  margin-top: var(--line);
+}
+/* more space above than below, so it belongs to what follows */
+.subhead {
+  position: relative;
+  margin-top: var(--line);
+  margin-bottom: var(--line);
+  line-height: var(--line);
+  font-weight: 600;
+}
+h2.subhead {
+  font-size: calc(var(--size) * 1.4);
+}
+h3.subhead {
+  font-size: calc(var(--size) * 1.15);
+}
+
+/* headings link to themselves; only the hash lights up */
+.anchor {
+  color: inherit;
+  text-decoration: none;
+}
+.anchor:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-subdomain) 50%, transparent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* the hash hangs outside the axis, so the words start on it. markdown
+   style: one # per level */
+.hash {
+  position: absolute;
+  right: 100%;
+  margin-right: 0.5em;
+  color: var(--color-subdomain);
+  font-weight: 400;
+  text-shadow: 0 0 0.6em transparent;
+  transition: text-shadow 150ms ease;
+}
+.hash::before {
+  content: "#";
+}
+h2 .hash::before {
+  content: "##";
+}
+h3 .hash::before {
+  content: "###";
+}
+h4 .hash::before {
+  content: "####";
+}
+.anchor:is(:hover, :focus-visible) .hash {
+  text-shadow: 0 0 0.6em var(--glow);
+}
+@media (width < 40rem) {
+  .hash {
+    position: static;
+  }
+}
+
+/* the ledger: a fixed-width ISO date, then the title */
+.entry {
+  display: flex;
+  gap: 1.5ch;
+  font-family: var(--font-body);
+  font-size: var(--size);
+  font-weight: var(--weight);
+  line-height: var(--line);
+}
+.entry-date {
+  flex: none;
+  color: var(--color-subtle);
+  font-variant-numeric: tabular-nums;
+}
+/* the blogroll: titles, a line apart */
+.roll {
+  padding-top: var(--line);
+}
+
+/* figures: the image keeps its size, centred in whole lines by rhythm.ts.
+   the caption sits under it, or hangs in the margin */
+.figure {
+  display: grid;
+}
+.figure img {
+  justify-self: start;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  outline: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+  outline-offset: -1px;
+  /* a touch of dimming on the dark page, lifting on hover */
+  filter: brightness(0.88);
+  transition: filter 200ms ease;
+}
+.figure:hover img {
+  filter: none;
+}
+.figure figcaption {
+  position: relative;
+  line-height: var(--line);
+  color: var(--color-subtle);
+  font-style: italic;
+}
+
+/* hanging: metadata and captions move into the margin */
+@media (width >= 80rem) {
+  .page-grid > .title:has(+ .meta) {
+    margin-bottom: var(--line);
+  }
+  /* on the row of the title's last line */
+  .page-grid > .meta {
+    grid-column: margin;
+    grid-row: 1;
+    align-self: end;
+    margin-bottom: var(--line);
+    text-align: right;
+  }
+  /* more metadata: the rows after */
+  .page-grid > .meta + .meta {
+    grid-row: 2;
+    align-self: start;
+    margin-bottom: 0;
+  }
+  .prose > .figure,
+  .page-grid > .figure {
+    grid-column: margin-start / text-end;
+    grid-template-columns: subgrid;
+  }
+  .figure img {
+    grid-column: text;
+  }
+  .figure figcaption {
+    grid-column: margin;
+    grid-row: 1;
+    align-self: start; /* centred on the image by rhythm.ts, then snapped */
+    text-align: right;
+  }
+}
