@@ -5,7 +5,7 @@ last-updated: 2026-11-21
 tags: [site]
 ---
 
-Apparently this blog only ever writes about constructing itself.
+Apparently this blog only ever writes about constructing itself, which is weird because I find my other projects more interesting.
 
 I was struggling with giving this site a refresh. Over the last few months I was off and on it again for a few days at a time. Turns out typography is important!
 

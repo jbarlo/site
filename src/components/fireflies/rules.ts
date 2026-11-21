@@ -1,10 +1,6 @@
-// per-fly state lives in each closure
-
 import { between, type FlashRule, type Fly, type Move } from "./sim";
 
 const still = { x: 0, y: 0 };
-
-// moves
 
 /** speed, nearerFaster: px/s */
 export const drift = (o: {
@@ -33,11 +29,9 @@ export const avoidCursor =
     return { x: dx * push, y: dy * push };
   };
 
-// flash rules
-
 export const clockRunsOut = (): FlashRule => (fly) => fly.clock >= 1;
 
-/** px. forgetsAfter > within (hysteresis, stops flicker) */
+/** px. forgetsAfter > within */
 export const noticesCursor = (o: {
   within: number;
   forgetsAfter: number;

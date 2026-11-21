@@ -1,5 +1,6 @@
-// markdown → the site's type system. runs after rehype-slug (ids) and the
-// link class plugins, so heading anchors don't pick up prose link styles
+import { readFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { imageMetadata } from "astro/assets/utils";
 
 /** @typedef {import("hast").Root} Root */
 /** @typedef {import("hast").Element} Element */
@@ -16,8 +17,6 @@ const walk = (node, visit) =>
     walk(child, visit);
   });
 
-/** subheads link to themselves, with a hanging markdown-style hash (drawn in
- * CSS by level: ## for h2, ### for h3) */
 export function rehypeHeadingAnchors() {
   /** @param {Root} tree */
   return (tree) =>
@@ -48,11 +47,18 @@ export function rehypeHeadingAnchors() {
     });
 }
 
-/** an image alone in its paragraph becomes a figure, captioned by its title:
- * ![alt](src "caption") */
-export function rehypeFigures() {
-  /** @param {Root} tree */
-  return (tree) =>
+/** ![alt](src "caption") alone in a paragraph -> figure. local images get
+ * width, height, --w and --h (px, unitless)
+ * @param {{ publicDir: string }} options
+ */
+export function rehypeFigures({ publicDir }) {
+  /**
+   * @param {Root} tree
+   * @param {import("vfile").VFile} file
+   */
+  return async (tree, file) => {
+    /** @type {Element[]} */
+    const images = [];
     walk(tree, (node, i, parent) => {
       if (node.tagName !== "p") return;
       const content = node.children.filter(
@@ -66,8 +72,10 @@ export function rehypeFigures() {
       )
         return;
       const { title, ...properties } = img.properties;
+      const image = { ...img, properties };
+      images.push(image);
       /** @type {ElementContent[]} */
-      const children = [{ ...img, properties }];
+      const children = [image];
       if (title)
         children.push({
           type: "element",
@@ -81,5 +89,63 @@ export function rehypeFigures() {
         properties: { className: ["figure"] },
         children,
       };
+    });
+    await Promise.all(images.map((img) => size(img, publicDir, file.path)));
+  };
+}
+
+/**
+ * @param {Element} img
+ * @param {string} publicDir
+ * @param {string | undefined} from the markdown file
+ */
+async function size(img, publicDir, from) {
+  const src = String(img.properties.src ?? "");
+  if (/^[a-z]+:|^\/\//i.test(src)) return;
+  const path = src.startsWith("/")
+    ? join(publicDir, decodeURI(src))
+    : from && join(dirname(from), decodeURI(src));
+  if (!path) return;
+  const data = await readFile(path).catch(() => undefined);
+  if (!data) return;
+  const meta = await imageMetadata(data, src);
+  const turned = (meta.orientation ?? 0) >= 5;
+  const [w, h] = turned ? [meta.height, meta.width] : [meta.width, meta.height];
+  img.properties.width = w;
+  img.properties.height = h;
+  img.properties.style = `--w: ${w}; --h: ${h}`;
+}
+
+const QUOTES = /** @type {const} */ ({
+  "“": "hang-ldquo",
+  '"': "hang-quot",
+  "‘": "hang-lsquo",
+  "'": "hang-apos",
+});
+
+/** a paragraph's opening quote mark -> span.hang-* */
+export function rehypeHangingQuotes() {
+  /** @param {Root} tree */
+  return (tree) =>
+    walk(tree, (node) => {
+      if (node.tagName !== "p") return;
+      const text = node.children[0];
+      if (text?.type !== "text") return;
+      const lead = text.value.search(/\S/);
+      const mark = text.value[lead];
+      if (lead < 0 || !(mark in QUOTES)) return;
+      node.children.splice(
+        0,
+        1,
+        {
+          type: "element",
+          tagName: "span",
+          properties: {
+            className: [QUOTES[/** @type {keyof typeof QUOTES} */ (mark)]],
+          },
+          children: [{ type: "text", value: mark }],
+        },
+        { type: "text", value: text.value.slice(lead + 1) },
+      );
     });
 }

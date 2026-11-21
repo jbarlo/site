@@ -33,7 +33,7 @@ const { posts } = Astro.props;
 
 <Page title={`tagged: ${tag}`}>
   <SectionHeading>blog</SectionHeading>
-  <!-- inline, so the small text sits in one whole line -->
+  <!-- must stay one line -->
   <div class="snap">
     <span class="text-xs text-subdomain not-italic">{tag}</span>
     <Link href={route("/blog")} class="ml-2 text-xs">clear</Link>

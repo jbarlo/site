@@ -35,7 +35,7 @@ export type Description = {
   startles: { every: [number, number]; reach: number; speed: number };
 };
 
-const LIT = 0.1; // glow above this is never restarted (anti-strobe)
+const LIT = 0.1; // 0..1; glow above this is never restarted
 const RELINK_EVERY = 0.5; // s
 const MAX_DT = 0.05; // s
 
@@ -107,7 +107,7 @@ export class Swarm {
 
   private spreadRipples() {
     for (const ripple of this.ripples) ripple.radius += ripple.speed * this.dt;
-    this.ripples = this.ripples.filter((r) => r.radius < r.reach + 20); // +ragged slack
+    this.ripples = this.ripples.filter((r) => r.radius < r.reach + 20); // px; > max ragged
   }
 
   private readyToFlash() {

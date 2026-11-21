@@ -1,5 +1,3 @@
-// drag, arrow keys, or type (enter / double-click) to change a number
-
 export type Scrub = {
   get: () => number;
   set: (value: number) => void; // clamps, if it needs to

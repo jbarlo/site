@@ -22,7 +22,6 @@ export function mount(canvas: HTMLCanvasElement, d: Description) {
     swarm.cursor = null;
   });
 
-  // reduced motion: no ticks
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const loop = (ms: number) => {
       swarm.tick(ms / 1000);

@@ -17,11 +17,10 @@ const { tags } = post.data;
 const { Content: PostContent } = await render(post);
 ---
 
-<!-- on the page grid: the date hangs in the margin on the title's last
-     line, the rest of the metadata below it; the body is in the text column
-     and its figures' captions hang too -->
 <article class="page-grid">
-  <h2 class="title">{post.data.title}</h2>
+  <h2 class="title" style={{ "--chars": post.data.title.length }}>
+    {post.data.title}
+  </h2>
   <div class="meta">
     <FormattedDate date={created} format="long" />
   </div>

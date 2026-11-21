@@ -17,8 +17,6 @@ const headingId =
     .replace(/^-+|-+$/g, "");
 ---
 
-<!-- links to itself; the hash hangs left of the axis, one # per level, and
-     only it lights up (see .label, .anchor and .hash in global.css) -->
 <Tag id={headingId} class="label">
   <a href={`#${headingId}`} class="anchor"
     ><span class="hash" aria-hidden="true"></span>{text}</a
