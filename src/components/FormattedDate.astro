@@ -11,6 +11,6 @@ const { date, format = "compact" } = Astro.props;
 const m = moment.utc(date);
 ---
 
-<time datetime={m.toISOString()}>
+<time datetime={m.toISOString()} class="tracking-[0.02em] tabular-nums">
   {m.format(format === "long" ? "MMM D, YYYY" : "YYYY-MM-DD")}
 </time>

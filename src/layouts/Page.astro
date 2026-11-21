@@ -3,13 +3,15 @@ import Layout from "./Layout.astro";
 import Header from "./Header.astro";
 import Three from "./Three.astro";
 import Footer from "./Footer.astro";
+import Fireflies from "../components/Fireflies.astro";
 
 interface Props {
   title: string;
   description?: string;
+  fireflies?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, fireflies = true } = Astro.props;
 ---
 
 <Layout title={`${title} | barlo`} description={description}>
@@ -19,6 +21,7 @@ const { title, description } = Astro.props;
       <Three>
         <slot />
       </Three>
+      {fireflies && <Fireflies />}
       <Footer />
     </div>
   </div>
