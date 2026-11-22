@@ -36,7 +36,7 @@ fonts:
     fs=node_modules/@fontsource
     vf=node_modules/@fontsource-variable
     while read -r src out; do
-      pyftsubset "$src" --unicodes="{{font_unicodes}}" --flavor=woff2 --output-file="src/fonts/$out.woff2"
+      pyftsubset "$src" --unicodes="{{font_unicodes}}" --layout-features+=tnum,pnum,lnum,onum --flavor=woff2 --output-file="src/fonts/$out.woff2"
     done <<LIST
     $fs/barlow/files/barlow-latin-400-normal.woff2 barlow-400
     $fs/barlow-semi-condensed/files/barlow-semi-condensed-latin-200-italic.woff2 barlow-semi-condensed-200-italic
