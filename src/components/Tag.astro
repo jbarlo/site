@@ -9,6 +9,9 @@ interface Props {
 const { tag } = Astro.props;
 ---
 
-<Link href={`${route("/blog")}/tags/${tag}`} class="tap">
+<Link
+  href={`${route("/blog")}/tags/${tag}`}
+  class="tap text-subtle italic underline"
+>
   {tag}
 </Link>
