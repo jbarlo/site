@@ -1,8 +1,34 @@
 @import "tailwindcss";
 
+/* hover only where it can be undone by moving away */
+@custom-variant lit {
+  &:focus-visible {
+    @slot;
+  }
+  @media (hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
+/* hit area of at least 44px, layout unchanged */
+@utility tap {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    translate: -50% -50%;
+  }
+}
+
 @theme {
   --color-title: #edf2f4;
-  --color-subdomain: #ffc53a;
+  --color-subdomain: #ff9e33;
   --color-footer: #16191c;
   --color-text: #cddbe1;
   --color-subtle: #9eb9c4;
@@ -19,7 +45,7 @@
   --color-limed-spruce-800: #3b454f;
   --color-limed-spruce-900: #373f47;
   --color-limed-spruce-950: #20262c;
-  --color-limed-spruce: #373f47;
+  --color-limed-spruce: #1a222d;
 
   --flex-grow-2: 2;
   --flex-grow-3: 3;
@@ -28,17 +54,50 @@
   --breakpoint-3xl: 1600px;
 }
 
+::selection {
+  background-color: var(--color-subdomain);
+  color: var(--color-limed-spruce);
+}
+
+html {
+  scrollbar-color: color-mix(
+      in srgb,
+      var(--color-subdomain) 20%,
+      var(--color-limed-spruce-600)
+    )
+    transparent;
+  -webkit-tap-highlight-color: color-mix(
+    in srgb,
+    var(--color-subdomain) 30%,
+    transparent
+  );
+}
+
+::marker {
+  color: var(--color-subdomain);
+}
+
 @utility link-internal {
   font-style: normal;
   text-decoration: none;
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
+  text-shadow: 0 0 0.5em transparent;
   transition:
     color 150ms ease,
-    text-decoration-color 150ms ease;
-  &:hover {
-    color: #fff;
+    text-decoration-color 150ms ease,
+    text-shadow 150ms ease;
+  @variant lit {
+    color: #fff4e4;
     text-decoration: underline;
+    text-shadow: 0 0 0.5em
+      color-mix(in srgb, var(--color-subdomain) 40%, transparent);
+  }
+  &:focus-visible {
+    outline: 2px solid
+      color-mix(in srgb, var(--color-subdomain) 50%, transparent);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
 
@@ -47,11 +106,21 @@
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
+  text-shadow: 0 0 0.5em transparent;
   transition:
     color 150ms ease,
-    text-decoration-color 150ms ease;
-  &:hover {
-    color: #fff;
+    text-decoration-color 150ms ease,
+    text-shadow 150ms ease;
+  @variant lit {
+    color: #fff4e4;
+    text-shadow: 0 0 0.5em
+      color-mix(in srgb, var(--color-subdomain) 40%, transparent);
+  }
+  &:focus-visible {
+    outline: 2px solid
+      color-mix(in srgb, var(--color-subdomain) 50%, transparent);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
   /* only add external icon link for non-icon links */
   &:not(:has(svg))::after {
@@ -67,5 +136,516 @@
     mask-size: contain;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
+  }
+}
+
+.scrub {
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  border-bottom: 1px dotted
+    color-mix(in srgb, var(--color-subtle) 40%, transparent);
+  cursor: ew-resize;
+  user-select: none;
+  touch-action: none; /* horizontal drag on touch */
+  outline: none;
+  transition:
+    color 150ms ease,
+    border-color 150ms ease;
+  &:active,
+  &[contenteditable="true"] {
+    color: var(--color-subdomain);
+    border-bottom-color: var(--color-subdomain);
+  }
+  @variant lit {
+    color: var(--color-subdomain);
+    border-bottom-color: var(--color-subdomain);
+  }
+  &[contenteditable="true"] {
+    cursor: text;
+    user-select: text;
+    border-bottom-style: solid;
+  }
+}
+
+:root {
+  --size: 18px;
+  --leading: 1.667;
+  --weight: 330;
+  --line: calc(var(--size) * var(--leading));
+  --line: round(calc(var(--size) * var(--leading)), 1px);
+  --gutter: calc(var(--size) * 1.75); /* px: the same at every font size */
+  --measure: 40.32rem; /* 80ch of Barlow Semi Condensed */
+  --margin-col: 9rem;
+  --pad: 1.25rem;
+  --lead-in: 0px; /* room left of the axis for hanging hashes */
+  --text-width: calc(100vw - 2 * var(--pad) - var(--lead-in)); /* at most */
+  --header: calc(var(--line) * 5);
+  --hang: 0;
+  --glow: color-mix(in srgb, var(--color-subdomain) 55%, transparent);
+  --page-columns: [full-start] var(--pad) [margin-start] 0 [margin-end]
+    var(--lead-in) [axis text-start] minmax(0, var(--measure)) [text-end]
+    minmax(0, 1fr) var(--pad) [full-end];
+
+  /* per em: body face, then Barlow Semi Condensed */
+  --body-ascent: 1.177;
+  --body-descent: 0.308;
+  --ascent: 1;
+  --descent: 0.2;
+  /* 1: a line's leading is split with the odd px below (Blink, WebKit) */
+  --leading-floor: 1;
+  --body-rise: round(calc(var(--body-ascent) * var(--size)), 1px);
+  --body-gap: calc(
+    var(--line) - var(--body-rise) -
+      round(calc(var(--body-descent) * var(--size)), 1px)
+  );
+  /* from the top of a row */
+  --body-baseline: calc(
+    var(--body-rise) +
+      (var(--body-gap) - var(--leading-floor) * mod(var(--body-gap), 2px)) / 2
+  );
+
+  --code-foreground: var(--color-text);
+  --code-background: color-mix(in srgb, var(--color-text) 7%, transparent);
+  --code-token-keyword: var(--color-subdomain);
+  --code-token-function: var(--color-title);
+  --code-token-constant: color-mix(
+    in srgb,
+    var(--color-subdomain) 55%,
+    var(--color-text)
+  );
+  --code-token-string: color-mix(in srgb, var(--color-title) 85%, #ffe3b0);
+  --code-token-string-expression: var(--code-token-string);
+  --code-token-comment: color-mix(
+    in srgb,
+    var(--color-subtle) 75%,
+    transparent
+  );
+  --code-token-parameter: var(--color-text);
+  --code-token-punctuation: var(--color-subtle);
+  --code-token-link: var(--color-subdomain);
+}
+/* Gecko splits it exactly */
+@supports (-moz-appearance: none) {
+  :root {
+    --leading-floor: 0;
+  }
+}
+@media (width >= 40rem) {
+  :root {
+    --lead-in: var(--pad);
+    --header: calc(var(--line) * 4);
+  }
+}
+@media (width >= 80rem) {
+  :root {
+    --hang: 1;
+    --text-width: calc(
+      100vw - 2 * var(--pad) - var(--margin-col) - var(--line)
+    );
+    --page-columns: [full-start] var(--pad) minmax(0, 1fr) [margin-start]
+      var(--margin-col) [margin-end] var(--line) [axis text-start]
+      minmax(0, var(--measure)) [text-end] minmax(0, 3fr) var(--pad) [full-end];
+  }
+}
+
+.page-grid {
+  display: grid;
+  grid-template-columns: var(--page-columns);
+}
+:where(.page-grid > *, .prose > *) {
+  grid-column: text;
+}
+.page-grid > :is(.page-grid, .full) {
+  grid-column: full;
+}
+.prose {
+  display: contents;
+}
+
+/* rows count from its top */
+[data-rhythm] {
+  align-content: start;
+  padding-block: var(--line) calc(var(--line) * 2);
+  line-height: var(--line);
+}
+html {
+  scroll-padding-top: var(--line);
+}
+@media (width >= 40rem) {
+  html {
+    scroll-padding-top: calc(var(--header) + var(--line));
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:has([data-rhythm]) {
+    scroll-behavior: smooth;
+  }
+}
+
+/* visual only. needs: top on a row, line-height whole lines */
+[data-rhythm] :is(.title, .meta, .label, .subhead, figcaption, .snap) {
+  --rise: round(calc(var(--ascent) * 1em), 1px);
+  --gap: calc(1lh - var(--rise) - round(calc(var(--descent) * 1em), 1px));
+  --shift: calc(
+    var(--body-baseline) - var(--rise) -
+      (var(--gap) - var(--leading-floor) * mod(var(--gap), 2px)) / 2
+  );
+  --nudge: calc(var(--shift) - round(var(--shift), var(--line)));
+  position: relative;
+  top: var(--nudge);
+}
+
+.body-text,
+.prose :is(p, li) {
+  font-family: var(--font-body);
+  font-size: var(--size);
+  font-weight: var(--weight);
+  line-height: var(--line);
+}
+.prose :is(p, ul, ol, blockquote, pre, figure) {
+  margin-bottom: var(--line);
+}
+/* quote advances, em: Literata wght 330, roman then italic */
+.prose .hang-ldquo {
+  margin-left: -0.484em;
+}
+.prose .hang-quot {
+  margin-left: -0.378em;
+}
+.prose .hang-lsquo {
+  margin-left: -0.302em;
+}
+.prose .hang-apos {
+  margin-left: -0.228em;
+}
+.prose blockquote .hang-ldquo {
+  margin-left: -0.459em;
+}
+.prose blockquote .hang-quot {
+  margin-left: -0.398em;
+}
+.prose blockquote .hang-lsquo {
+  margin-left: -0.268em;
+}
+.prose blockquote .hang-apos {
+  margin-left: -0.246em;
+}
+
+.prose :is(ul, ol, blockquote) {
+  padding-left: var(--gutter);
+}
+.prose :is(ul, ol, blockquote) > *,
+.prose li > :is(ul, ol) {
+  margin-bottom: 0;
+}
+.prose :is(ul, ol) {
+  list-style: none;
+}
+.prose :is(ul, ol) > li {
+  position: relative;
+}
+.prose :is(ul, ol) > li::before {
+  position: absolute;
+  left: calc(-1 * var(--gutter));
+  color: var(--color-subtle);
+  font-variant-numeric: tabular-nums;
+}
+/* 1ch: one tabular figure */
+.prose ul > li::before {
+  content: "•";
+  width: 1ch;
+  text-align: center;
+}
+.prose ol {
+  counter-reset: item;
+}
+.prose ol > li {
+  counter-increment: item;
+}
+.prose ol > li::before {
+  content: counter(item) ".";
+}
+.prose blockquote {
+  position: relative;
+  font-style: italic;
+}
+.prose blockquote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  inset-block: 0.35em;
+  width: 2px;
+  background: color-mix(in srgb, var(--color-subtle) 40%, transparent);
+}
+
+.prose pre {
+  padding: calc(var(--line) / 2) 1.5ch;
+  overflow-x: auto;
+  border-radius: 4px;
+  background: var(--code-background);
+  font-family: "Iosevka Etoile", monospace;
+  font-size: calc(var(--size) * 0.85);
+  line-height: var(--line);
+}
+.prose pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* 0..1. --shine: orange at 0.35, white at 1 */
+@property --shine {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@property --lit {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+.prose a:not(.anchor) {
+  --rest: var(--color-subtle);
+  --path: color-mix(
+    in srgb,
+    color-mix(
+      in srgb,
+      var(--rest),
+      var(--color-subdomain) clamp(0%, calc(var(--shine) / 0.35 * 100%), 100%)
+    ),
+    #fff4e4 clamp(0%, calc((var(--shine) - 0.35) / 0.65 * 100%), 100%)
+  );
+  color: color-mix(in srgb, var(--rest), var(--path) calc(var(--lit) * 100%));
+  text-decoration-color: currentColor;
+  text-shadow: 0 0 0.6em
+    color-mix(
+      in srgb,
+      var(--color-subdomain) calc(var(--lit) * var(--shine) * 55%),
+      transparent
+    );
+  transition:
+    --lit 150ms ease,
+    --shine 0s linear 150ms;
+}
+.prose a:not(.anchor) {
+  @variant lit {
+    --lit: 1;
+    --shine: 1;
+    transition: --shine 450ms ease-out;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prose a:not(.anchor),
+  .prose a:not(.anchor):is(:hover, :focus-visible) {
+    transition: none;
+  }
+}
+
+/* at most two lines. 4.3: size × chars ÷ width at two full lines, less
+   ragged-break slack */
+/* --chars: set on the title's grid. lines: half rows; what follows starts
+   its rows from the title's bottom */
+.page-grid:has(> .title) {
+  --title-size: clamp(
+    26px,
+    min(var(--measure), var(--text-width)) * 4.3 / var(--chars, 1),
+    42px
+  );
+  --title-line: round(up, var(--title-size) * 1.05, var(--line) / 2);
+}
+.title {
+  position: relative;
+  font-size: var(--title-size);
+  font-weight: 600;
+  text-wrap: balance;
+  line-height: var(--title-line);
+}
+/* last baseline on the bottom row's */
+[data-rhythm] .title {
+  --nudge: calc(var(--shift) + 1lh - var(--line));
+}
+.meta {
+  position: relative;
+  margin-bottom: var(--line);
+  line-height: var(--line);
+  color: var(--color-subtle);
+  font-style: italic;
+  font-variant-numeric: tabular-nums;
+}
+.meta:has(+ .meta) {
+  margin-bottom: 0;
+}
+
+.label {
+  position: relative;
+  padding-bottom: 0.25rem;
+  font-size: 1.25rem;
+  text-transform: lowercase;
+}
+[data-rhythm] .label {
+  padding-bottom: 0;
+  margin-bottom: var(--line);
+  line-height: var(--line);
+}
+[data-rhythm] .label:not(:first-child) {
+  margin-top: var(--line);
+}
+.subhead {
+  position: relative;
+  margin-top: var(--line);
+  margin-bottom: var(--line);
+  line-height: var(--line);
+  font-weight: 600;
+}
+h2.subhead {
+  font-size: calc(var(--size) * 1.4);
+}
+h3.subhead {
+  font-size: calc(var(--size) * 1.15);
+}
+
+.anchor {
+  color: inherit;
+  text-decoration: none;
+}
+.anchor:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-subdomain) 50%, transparent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.hash {
+  position: absolute;
+  right: 100%;
+  margin-right: 0.5em;
+  color: var(--color-subdomain);
+  font-weight: 400;
+  text-shadow: 0 0 0.6em transparent;
+  transition: text-shadow 150ms ease;
+}
+.hash::before {
+  content: "#";
+}
+h2 .hash::before {
+  content: "##";
+}
+h3 .hash::before {
+  content: "###";
+}
+h4 .hash::before {
+  content: "####";
+}
+.anchor {
+  @variant lit {
+    & .hash {
+      text-shadow: 0 0 0.6em var(--glow);
+    }
+  }
+}
+@media (width < 40rem) {
+  .hash {
+    position: static;
+  }
+}
+
+.entry {
+  display: flex;
+  gap: 1.5ch;
+  font-family: var(--font-body);
+  font-size: var(--size);
+  font-weight: var(--weight);
+  line-height: var(--line);
+}
+.entry-date {
+  flex: none;
+  color: var(--color-subtle);
+  font-variant-numeric: tabular-nums;
+}
+.roll {
+  padding-top: var(--line);
+}
+
+.figure {
+  --column: 100cqi;
+  display: grid;
+  container-type: inline-size;
+}
+.figure img {
+  /* --w, --h: intrinsic px, unitless. height: whole px */
+  --width: min(var(--w) * 1px, var(--column));
+  --height: round(calc(var(--width) * var(--h) / var(--w)), 1px);
+  --box: round(up, var(--height), var(--line));
+  justify-self: start;
+  max-width: 100%;
+  width: var(--width);
+  height: var(--height);
+  object-fit: cover;
+  margin-block: calc((var(--box) - var(--height)) / 2);
+  border-radius: 6px;
+  outline: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+  outline-offset: -1px;
+  filter: brightness(0.88);
+  transition: filter 200ms ease;
+}
+.figure {
+  @variant hover {
+    & img {
+      filter: none;
+    }
+  }
+}
+.figure figcaption {
+  position: relative;
+  line-height: var(--line);
+  color: var(--color-subtle);
+  font-style: italic;
+}
+
+@media (width >= 80rem) {
+  .page-grid > .back {
+    grid-column: margin;
+    text-align: right;
+  }
+  .page-grid > .title:has(+ .meta) {
+    margin-bottom: var(--line);
+  }
+  /* on the row of the title's last line */
+  .page-grid > .meta {
+    grid-column: margin;
+    grid-row: 1;
+    align-self: end;
+    margin-bottom: var(--line);
+    text-align: right;
+  }
+  .page-grid > .meta + .meta {
+    grid-row: 2;
+    align-self: start;
+    margin-bottom: 0;
+  }
+  .prose > .figure,
+  .page-grid > .figure {
+    --column: calc(100cqi - var(--margin-col) - var(--line));
+    grid-column: margin-start / text-end;
+    grid-template-columns:
+      [margin-start] var(--margin-col) [margin-end] var(--line)
+      [text-start] minmax(0, 1fr) [text-end];
+  }
+  .figure img {
+    grid-column: text;
+  }
+  /* odd lines: a one-line caption centres exactly */
+  .figure:has(figcaption) img {
+    --box: calc(
+      round(up, var(--height) - var(--line), 2 * var(--line)) + var(--line)
+    );
+  }
+  /* top 50%: of the image box; translate 50%: of the caption */
+  [data-rhythm] .figure figcaption {
+    grid-column: margin;
+    grid-row: 1;
+    align-self: start;
+    top: calc(round(up, 50%, var(--line)) + var(--nudge));
+    translate: 0 calc(-1 * round(up, 50%, var(--line)));
+    text-align: right;
   }
 }

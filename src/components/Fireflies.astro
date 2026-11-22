@@ -1,0 +1,76 @@
+---
+import { controlNames, readControl } from "./fireflies/controls";
+---
+
+<div class="fireflies">
+  <canvas
+    aria-label="Fireflies drifting away from the cursor"
+  ></canvas>
+  <p class="fireflies-settings">
+    {
+      controlNames.map((name) => (
+        <span>
+          {name}
+          <span class="scrub tap" data-control={name} aria-label={name}>
+            {readControl(name)}
+          </span>
+        </span>
+      ))
+    }
+  </p>
+</div>
+
+<style>
+  .fireflies {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+  }
+  .fireflies canvas {
+    display: block;
+    flex: 1 1 0; /* size from the space, never from the pixel buffer */
+    width: 100%;
+    min-height: 208px;
+  }
+  .fireflies-settings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.25rem 1.25rem;
+    padding: 0.25rem 1.25rem 0.5rem;
+    font-family: "Iosevka Etoile", monospace;
+    font-size: 0.65rem;
+    color: color-mix(in srgb, var(--color-subtle) 70%, transparent);
+  }
+  .scrub {
+    margin-left: 0.5ch;
+  }
+</style>
+
+<script>
+  import { fireflies } from "./fireflies/fireflies";
+  import { mount } from "./fireflies/mount";
+  import {
+    controls,
+    readControl,
+    writeControl,
+    type ControlName,
+  } from "./fireflies/controls";
+  import { scrubbable } from "./scrub";
+
+  for (const root of document.querySelectorAll<HTMLElement>(".fireflies")) {
+    const swarm = mount(root.querySelector("canvas")!, fireflies);
+    for (const el of root.querySelectorAll<HTMLElement>("[data-control]")) {
+      const name = el.dataset.control as ControlName;
+      scrubbable(el, {
+        ...controls[name],
+        get: () => readControl(name),
+        set: (value) => {
+          writeControl(name, value);
+          swarm.refresh();
+        },
+      });
+    }
+  }
+</script>

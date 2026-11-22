@@ -1,9 +1,24 @@
 ---
 interface Props {
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  id?: string;
 }
 
-const { as: Tag = "h2" } = Astro.props;
+const { as: Tag = "h2", id } = Astro.props;
+
+const text = (await Astro.slots.render("default"))
+  .replace(/<[^>]+>/g, "")
+  .trim();
+const headingId =
+  id ??
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 ---
 
-<Tag class="pb-1 text-xl lowercase"><slot /></Tag>
+<Tag id={headingId} class="label">
+  <a href={`#${headingId}`} class="anchor"
+    ><span class="hash" aria-hidden="true"></span>{text}</a
+  >
+</Tag>

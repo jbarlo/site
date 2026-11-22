@@ -32,12 +32,11 @@ const { posts } = Astro.props;
 ---
 
 <Page title={`tagged: ${tag}`}>
-  <div class="mb-4">
-    <SectionHeading>blog</SectionHeading>
-    <div class="flex items-baseline gap-2 pb-2">
-      <span class="text-xs text-subdomain not-italic">#{tag}</span>
-      <Link href={route("/blog")} class="text-xs">clear</Link>
-    </div>
-    <PostList posts={posts} />
+  <SectionHeading>blog</SectionHeading>
+  <!-- must stay one line -->
+  <div class="snap">
+    <span class="text-xs text-subdomain not-italic">{tag}</span>
+    <Link href={route("/blog")} class="ml-2 text-xs">clear</Link>
   </div>
+  <PostList posts={posts} variant="roll" />
 </Page>

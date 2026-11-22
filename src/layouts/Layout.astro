@@ -1,16 +1,5 @@
 ---
-import "@fontsource/barlow-semi-condensed/100.css";
-import "@fontsource/barlow-semi-condensed/200.css";
-import "@fontsource/barlow-semi-condensed/300.css";
-import "@fontsource/barlow-semi-condensed/400.css";
-import "@fontsource/barlow-semi-condensed/500.css";
-import "@fontsource/barlow-semi-condensed/600.css";
-import "@fontsource/barlow-semi-condensed/700.css";
-import "@fontsource/barlow-semi-condensed/800.css";
-import "@fontsource/barlow-semi-condensed/900.css";
-import "@fontsource/barlow-semi-condensed/200-italic.css";
-import "@fontsource/barlow-semi-condensed/400-italic.css";
-import "@fontsource/iosevka-etoile";
+import "../styles/fonts.css";
 import "../styles/global.css";
 
 interface Props {
@@ -26,7 +15,8 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     {description && <meta name="description" content={description} />}
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
@@ -45,16 +35,17 @@ const { title, description } = Astro.props;
       sans-serif;
   }
   @layer base {
+    /* inline: must not grow the line */
     code {
+      display: inline;
+      padding: 0.15em 0.35em;
       font-family: "Iosevka Etoile", monospace;
-      font-size: 0.8em;
-      @apply rounded;
-      @apply bg-limed-spruce-700;
-      @apply pl-1;
-      @apply pr-1;
-      @apply pt-1;
-      @apply pb-0.5;
-      display: inline-block;
+      font-size: 0.85em;
+      line-height: 1;
+      border-radius: 3px;
+      background: color-mix(in srgb, var(--color-text) 7%, transparent);
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
     }
   }
 </style>

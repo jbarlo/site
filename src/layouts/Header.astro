@@ -1,7 +1,6 @@
 ---
 import HeaderTitle from "../components/HeaderTitle";
 import NavLink from "../components/NavLink.astro";
-import Three from "../layouts/Three.astro";
 import { route } from "../utils";
 
 const pages = [
@@ -17,17 +16,17 @@ const isBlog =
   pathname === route("/blog") || pathname.startsWith(`${route("/blog")}/`);
 ---
 
-<nav class="top-0 z-10 bg-limed-spruce [@media(min-height:32rem)]:sticky">
-  <Three>
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-      <HeaderTitle suffix={isBlog ? "g" : undefined} />
-      <span class="space-x-4">
-        {
-          pages.map(({ url, title }) => (
-            <NavLink currUrl={Astro.url.pathname} toUrl={url} title={title} />
-          ))
-        }
-      </span>
-    </div>
-  </Three>
+<nav
+  class="page-grid top-0 z-10 h-(--header) content-center bg-limed-spruce sm:[@media(min-height:32rem)]:sticky"
+>
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+    <HeaderTitle suffix={isBlog ? "g" : undefined} />
+    <span class="flex items-baseline gap-4">
+      {
+        pages.map(({ url, title }) => (
+          <NavLink currUrl={Astro.url.pathname} toUrl={url} title={title} />
+        ))
+      }
+    </span>
+  </div>
 </nav>

@@ -1,0 +1,59 @@
+---
+// frozen: doesn't track the site's palette or fonts
+import Layout from "../layouts/Layout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Fireflies from "../components/Fireflies.astro";
+import Link from "../components/Link.astro";
+import { route } from "../utils";
+---
+
+<Layout title="fireflies | barlo">
+  <div class="dusk">
+    <header>
+      <Link href={route("/")} class="tap text-subtle" data-back>← back</Link>
+      <SectionHeading as="h1">fireflies</SectionHeading>
+    </header>
+    <Fireflies />
+  </div>
+</Layout>
+
+<script>
+  const back = document.querySelector<HTMLAnchorElement>("[data-back]");
+  const fromSite = document.referrer.startsWith(location.origin);
+  if (back && fromSite) {
+    back.addEventListener("click", (event) => {
+      event.preventDefault();
+      history.back();
+    });
+  }
+</script>
+
+<style is:global>
+  :root {
+    font-size: 20px;
+    --color-title: #edf2f4;
+    --color-subdomain: #ff9e33;
+    --color-footer: #16191c;
+    --color-text: #cddbe1;
+    --color-subtle: #9eb9c4;
+    --color-limed-spruce: #1a222d;
+    background: #1a222d;
+  }
+</style>
+
+<style>
+  .dusk {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    background: #1a222d;
+    color: #cddbe1;
+    font-family: "Barlow Semi Condensed", sans-serif;
+  }
+  header {
+    width: 100%;
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 0.5rem;
+  }
+</style>

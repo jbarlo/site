@@ -1,6 +1,5 @@
 ---
 import FormattedDate from "../components/FormattedDate.astro";
-import Quiet from "../components/Quiet";
 import Tag from "../components/Tag.astro";
 import { render, type CollectionEntry } from "astro:content";
 
@@ -13,57 +12,39 @@ const { post } = Astro.props;
 const created = post.data.created;
 const lastUpdated = post.data["last-updated"];
 const wasUpdated = created.getTime() !== lastUpdated.getTime();
+const { tags } = post.data;
 
 const { Content: PostContent } = await render(post);
 ---
 
-<article class="post">
-  <div
-    class="flex flex-col gap-x-2 pb-2 sm:flex-row sm:items-end sm:justify-between"
-  >
-    <h2 class="text-xl">{post.data.title}</h2>
-    <span class="sm:text-right">
-      <span class="inline-block">
-        <FormattedDate date={created} format="long" />
-      </span>
-      <span class="inline-block">
-        {
-          wasUpdated && (
-            <Quiet>
-              (Last updated: <FormattedDate date={lastUpdated} format="long" />)
-            </Quiet>
-          )
-        }
-      </span>
-    </span>
+<article class="page-grid" style={{ "--chars": post.data.title.length }}>
+  <h2 class="title">
+    {post.data.title}
+  </h2>
+  <div class="meta">
+    <FormattedDate date={created} format="long" />
   </div>
   {
-    post.data.tags.length > 0 && (
-      <div class="flex gap-2 pb-3">
-        {post.data.tags.map((tag) => (
-          <Tag tag={tag} />
+    wasUpdated && (
+      <div class="meta">
+        updated <FormattedDate date={lastUpdated} format="long" />
+      </div>
+    )
+  }
+  <div class="prose">
+    <PostContent />
+  </div>
+  {
+    tags.length > 0 && (
+      <div class="body-text">
+        <span class="text-subdomain">[tags]:</span>
+        {tags.map((tag, i) => (
+          <>
+            {i > 0 && ", "}
+            <Tag tag={tag} />
+          </>
         ))}
       </div>
     )
   }
-  <div>
-    <PostContent />
-  </div>
 </article>
-
-<style>
-  @reference "../styles/global.css";
-
-  .post :global(p) {
-    @apply leading-snug;
-    @apply pb-3;
-  }
-  .post :global(img) {
-    @apply m-auto;
-  }
-  .post :global(ul) {
-    @apply list-disc;
-    @apply list-inside;
-    @apply leading-snug;
-  }
-</style>

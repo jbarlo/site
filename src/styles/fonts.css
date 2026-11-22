@@ -1,0 +1,102 @@
+/* sources: `just fonts`. inlined into the stylesheet at build */
+@font-face {
+  font-family: "Barlow";
+  font-weight: 400;
+  font-display: block;
+  src: url("../fonts/barlow-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-weight: 200;
+  font-style: italic;
+  font-display: block;
+  src: url("../fonts/barlow-semi-condensed-200-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-weight: 400;
+  font-display: block;
+  src: url("../fonts/barlow-semi-condensed-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-weight: 400;
+  font-style: italic;
+  font-display: block;
+  src: url("../fonts/barlow-semi-condensed-400-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-weight: 600;
+  font-display: block;
+  src: url("../fonts/barlow-semi-condensed-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Literata";
+  font-weight: 200 900;
+  font-display: block;
+  src: url("../fonts/literata.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Literata";
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: block;
+  src: url("../fonts/literata-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Iosevka Etoile";
+  font-weight: 400;
+  font-display: block;
+  src: url("../fonts/iosevka-etoile-400.woff2") format("woff2");
+}
+
+/* matched to Literata at wght 330, 18px. size-adjust: width ratio;
+   overrides: Literata metric / size-adjust. no font-weight: bold synthesises */
+@font-face {
+  font-family: "Literata Fallback";
+  font-style: normal;
+  src: local("Georgia");
+  size-adjust: 104.68%;
+  ascent-override: 112.43%;
+  descent-override: 29.42%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Literata Fallback";
+  font-style: italic;
+  src: local("Georgia Italic"), local("Georgia-Italic");
+  size-adjust: 97.19%;
+  ascent-override: 121.1%;
+  descent-override: 31.69%;
+  line-gap-override: 0%;
+}
+/* no Georgia: Times New Roman, Liberation Serif and Tinos share metrics */
+@font-face {
+  font-family: "Literata Fallback Times";
+  font-style: normal;
+  src:
+    local("Times New Roman"), local("TimesNewRomanPSMT"),
+    local("Liberation Serif"), local("LiberationSerif"), local("Tinos");
+  size-adjust: 114.68%;
+  ascent-override: 102.64%;
+  descent-override: 26.86%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Literata Fallback Times";
+  font-style: italic;
+  src:
+    local("Times New Roman Italic"), local("TimesNewRomanPS-ItalicMT"),
+    local("Liberation Serif Italic"), local("LiberationSerif-Italic"),
+    local("Tinos Italic"), local("Tinos-Italic");
+  size-adjust: 108.61%;
+  ascent-override: 108.37%;
+  descent-override: 28.36%;
+  line-gap-override: 0%;
+}
+
+:root {
+  --font-body:
+    "Literata", "Literata Fallback", "Literata Fallback Times", serif;
+}

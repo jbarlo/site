@@ -1,17 +1,14 @@
 ---
 import ExternalLink from "../components/ExternalLink";
 import Github from "../components/icons/Github";
-import Three from "./Three.astro";
 ---
 
-<nav class="bg-footer">
-  <Three>
-    <div class="flex justify-end gap-5">
-      <ExternalLink href="https://www.github.com/jbarlo/">
-        <span class="text-text hover:text-white">
-          <Github />
-        </span>
-      </ExternalLink>
-    </div>
-  </Three>
+<nav class="page-grid bg-footer py-5">
+  <div class="flex justify-end gap-5">
+    <ExternalLink href="https://www.github.com/jbarlo/">
+      <span class="text-text hover:text-white">
+        <Github />
+      </span>
+    </ExternalLink>
+  </div>
 </nav>

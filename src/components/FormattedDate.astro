@@ -4,13 +4,14 @@ import moment from "moment";
 interface Props {
   date: Date;
   format?: "compact" | "long";
+  class?: string;
 }
 
-const { date, format = "compact" } = Astro.props;
+const { date, format = "compact", class: className } = Astro.props;
 // parsed tz-less timestamps are assumed to be UTC
 const m = moment.utc(date);
 ---
 
-<time datetime={m.toISOString()}>
+<time datetime={m.toISOString()} class:list={["tabular-nums", className]}>
   {m.format(format === "long" ? "MMM D, YYYY" : "YYYY-MM-DD")}
 </time>
