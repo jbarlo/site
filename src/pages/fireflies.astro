@@ -1,20 +1,32 @@
 ---
 // frozen: doesn't track the site's palette or fonts
-import "@fontsource/barlow-semi-condensed/400.css";
-import "@fontsource/iosevka-etoile";
 import Layout from "../layouts/Layout.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import Fireflies from "../components/Fireflies.astro";
+import Link from "../components/Link.astro";
+import { route } from "../utils";
 ---
 
 <Layout title="fireflies | barlo">
   <div class="dusk">
     <header>
+      <Link href={route("/")} class="tap text-subtle" data-back>← back</Link>
       <SectionHeading as="h1">fireflies</SectionHeading>
     </header>
     <Fireflies />
   </div>
 </Layout>
+
+<script>
+  const back = document.querySelector<HTMLAnchorElement>("[data-back]");
+  const fromSite = document.referrer.startsWith(location.origin);
+  if (back && fromSite) {
+    back.addEventListener("click", (event) => {
+      event.preventDefault();
+      history.back();
+    });
+  }
+</script>
 
 <style is:global>
   :root {

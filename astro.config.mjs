@@ -16,7 +16,12 @@ import {
 // https://astro.build/config
 export default defineConfig({
   integrations: [react()],
-  vite: { plugins: [tailwindcss()] },
+  vite: {
+    plugins: [tailwindcss()],
+    build: {
+      assetsInlineLimit: (file) => (file.endsWith(".woff2") ? true : undefined),
+    },
+  },
   outDir: "./static",
   markdown: {
     shikiConfig: { theme: codeTheme },

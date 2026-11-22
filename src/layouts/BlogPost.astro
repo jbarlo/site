@@ -17,33 +17,34 @@ const { tags } = post.data;
 const { Content: PostContent } = await render(post);
 ---
 
-<article class="page-grid">
-  <h2 class="title" style={{ "--chars": post.data.title.length }}>
+<article class="page-grid" style={{ "--chars": post.data.title.length }}>
+  <h2 class="title">
     {post.data.title}
   </h2>
   <div class="meta">
     <FormattedDate date={created} format="long" />
   </div>
   {
-    (wasUpdated || tags.length > 0) && (
+    wasUpdated && (
       <div class="meta">
-        {wasUpdated && (
-          <div class="inline-block">
-            updated <FormattedDate date={lastUpdated} format="long" />
-          </div>
-        )}
-        {wasUpdated && tags.length > 0 && " "}
-        {tags.length > 0 && (
-          <div class="inline-flex gap-2 not-italic">
-            {tags.map((tag) => (
-              <Tag tag={tag} />
-            ))}
-          </div>
-        )}
+        updated <FormattedDate date={lastUpdated} format="long" />
       </div>
     )
   }
   <div class="prose">
     <PostContent />
   </div>
+  {
+    tags.length > 0 && (
+      <div class="body-text">
+        <span class="text-subdomain">[tags]:</span>
+        {tags.map((tag, i) => (
+          <>
+            {i > 0 && ", "}
+            <Tag tag={tag} />
+          </>
+        ))}
+      </div>
+    )
+  }
 </article>

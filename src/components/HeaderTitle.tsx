@@ -1,5 +1,4 @@
 import type { FC } from "react";
-import "@fontsource/barlow";
 
 export interface HeaderTitleProps {
   suffix?: string;

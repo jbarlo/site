@@ -11,7 +11,7 @@ import { controlNames, readControl } from "./fireflies/controls";
       controlNames.map((name) => (
         <span>
           {name}
-          <span class="scrub" data-control={name} aria-label={name}>
+          <span class="scrub tap" data-control={name} aria-label={name}>
             {readControl(name)}
           </span>
         </span>

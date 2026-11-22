@@ -9,7 +9,7 @@ const ExternalLink: FC<ExternalLinkProps> = ({
 }: PropsWithChildren<ExternalLinkProps>) => (
   <a
     href={href}
-    className="link-external"
+    className="tap link-external"
     target="_blank"
     rel="noopener noreferrer"
   >

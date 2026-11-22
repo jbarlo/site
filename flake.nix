@@ -18,6 +18,7 @@
           nodejs_26
           pnpm
           just
+          (python3.withPackages (p: [ p.fonttools p.brotli ]))
         ];
       };
     }

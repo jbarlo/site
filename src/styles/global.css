@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+/* hover only where it can be undone by moving away */
+@custom-variant lit {
+  &:focus-visible {
+    @slot;
+  }
+  @media (hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
+/* hit area of at least 44px, layout unchanged */
+@utility tap {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    translate: -50% -50%;
+  }
+}
+
 @theme {
   --color-title: #edf2f4;
   --color-subdomain: #ff9e33;
@@ -61,8 +87,7 @@ html {
     color 150ms ease,
     text-decoration-color 150ms ease,
     text-shadow 150ms ease;
-  &:hover,
-  &:focus-visible {
+  @variant lit {
     color: #fff4e4;
     text-decoration: underline;
     text-shadow: 0 0 0.5em
@@ -86,8 +111,7 @@ html {
     color 150ms ease,
     text-decoration-color 150ms ease,
     text-shadow 150ms ease;
-  &:hover,
-  &:focus-visible {
+  @variant lit {
     color: #fff4e4;
     text-shadow: 0 0 0.5em
       color-mix(in srgb, var(--color-subdomain) 40%, transparent);
@@ -127,10 +151,12 @@ html {
   transition:
     color 150ms ease,
     border-color 150ms ease;
-  &:hover,
-  &:focus-visible,
   &:active,
   &[contenteditable="true"] {
+    color: var(--color-subdomain);
+    border-bottom-color: var(--color-subdomain);
+  }
+  @variant lit {
     color: var(--color-subdomain);
     border-bottom-color: var(--color-subdomain);
   }
@@ -148,7 +174,7 @@ html {
   --line: calc(var(--size) * var(--leading));
   --line: round(calc(var(--size) * var(--leading)), 1px);
   --gutter: calc(var(--size) * 1.75); /* px: the same at every font size */
-  --measure: 80ch; /* of the page font: resolved where the grid is used */
+  --measure: 40.32rem; /* 80ch of Barlow Semi Condensed */
   --margin-col: 9rem;
   --pad: 1.25rem;
   --lead-in: 0px; /* room left of the axis for hanging hashes */
@@ -243,7 +269,12 @@ html {
   line-height: var(--line);
 }
 html {
-  scroll-padding-top: calc(var(--header) + var(--line));
+  scroll-padding-top: var(--line);
+}
+@media (width >= 40rem) {
+  html {
+    scroll-padding-top: calc(var(--header) + var(--line));
+  }
 }
 @media (prefers-reduced-motion: no-preference) {
   html:has([data-rhythm]) {
@@ -397,10 +428,12 @@ html {
     --lit 150ms ease,
     --shine 0s linear 150ms;
 }
-.prose a:not(.anchor):is(:hover, :focus-visible) {
-  --lit: 1;
-  --shine: 1;
-  transition: --shine 450ms ease-out;
+.prose a:not(.anchor) {
+  @variant lit {
+    --lit: 1;
+    --shine: 1;
+    transition: --shine 450ms ease-out;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .prose a:not(.anchor),
@@ -411,18 +444,26 @@ html {
 
 /* at most two lines. 4.3: size × chars ÷ width at two full lines, less
    ragged-break slack */
-.title {
-  position: relative;
-  font-size: clamp(
+/* --chars: set on the title's grid. lines: half rows; what follows starts
+   its rows from the title's bottom */
+.page-grid:has(> .title) {
+  --title-size: clamp(
     26px,
     min(var(--measure), var(--text-width)) * 4.3 / var(--chars, 1),
     42px
   );
+  --title-line: round(up, var(--title-size) * 1.05, var(--line) / 2);
+}
+.title {
+  position: relative;
+  font-size: var(--title-size);
   font-weight: 600;
   text-wrap: balance;
-  /* whole lines, however big */
-  line-height: calc(var(--line) * 2);
-  line-height: round(up, 1.1em, var(--line));
+  line-height: var(--title-line);
+}
+/* last baseline on the bottom row's */
+[data-rhythm] .title {
+  --nudge: calc(var(--shift) + 1lh - var(--line));
 }
 .meta {
   position: relative;
@@ -494,8 +535,12 @@ h3 .hash::before {
 h4 .hash::before {
   content: "####";
 }
-.anchor:is(:hover, :focus-visible) .hash {
-  text-shadow: 0 0 0.6em var(--glow);
+.anchor {
+  @variant lit {
+    & .hash {
+      text-shadow: 0 0 0.6em var(--glow);
+    }
+  }
 }
 @media (width < 40rem) {
   .hash {
@@ -542,8 +587,12 @@ h4 .hash::before {
   filter: brightness(0.88);
   transition: filter 200ms ease;
 }
-.figure:hover img {
-  filter: none;
+.figure {
+  @variant hover {
+    & img {
+      filter: none;
+    }
+  }
 }
 .figure figcaption {
   position: relative;
@@ -553,6 +602,10 @@ h4 .hash::before {
 }
 
 @media (width >= 80rem) {
+  .page-grid > .back {
+    grid-column: margin;
+    text-align: right;
+  }
   .page-grid > .title:has(+ .meta) {
     margin-bottom: var(--line);
   }

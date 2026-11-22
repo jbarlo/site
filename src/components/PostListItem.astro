@@ -15,8 +15,11 @@ const href = `${route("/blog")}/${post.id}`;
 
 {
   variant === "roll" ? (
-    <article class="roll page-grid">
-      <h3 class="title" style={{ "--chars": post.data.title.length }}>
+    <article
+      class="roll page-grid"
+      style={{ "--chars": post.data.title.length }}
+    >
+      <h3 class="title">
         <Link href={href}>{post.data.title}</Link>
       </h3>
       <div class="meta">

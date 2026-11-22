@@ -21,8 +21,8 @@ const { post } = Astro.props;
 ---
 
 <Page title={post.data.title}>
-  <div class="snap mb-(--line)">
-    <Link href={route("/blog")}>← back</Link>
+  <div class="snap back mb-(--line)">
+    <Link href={route("/blog")} class="tap">← back</Link>
   </div>
   <BlogPost post={post} />
 </Page>
